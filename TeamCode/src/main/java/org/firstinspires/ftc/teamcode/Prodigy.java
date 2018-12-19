@@ -7,14 +7,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="MarcNew")
-public class MarcNew extends LinearOpMode {
+@TeleOp
+public class Prodigy extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,
             Joint;
     private Servo Phone, ClawL,ClawR,Latch;
     private double FRP,FLP,BRP,BLP;
-    private double x,CL,CR = 0;
+    private double x,CL = 0,CR = 0;
     private final boolean shouldMecanumDrive = true;
 
     @Override
@@ -47,10 +47,10 @@ public class MarcNew extends LinearOpMode {
          /*
          Setting the Direction of each motor where needed
          */
-        FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        FrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        BackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        FrontRight.setDirection(DcMotorSimple.Direction.FORWARD);//Reverse
+        FrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);//Forward
+        BackLeft.setDirection(DcMotorSimple.Direction.REVERSE);//Forward
+        BackRight.setDirection(DcMotorSimple.Direction.FORWARD);//Reverse
          /*
          Initializing the Encoders.
             Resetting them and setting their run mode.
@@ -104,7 +104,7 @@ public class MarcNew extends LinearOpMode {
         Similar to the movement of the phone's servo as it incrementally increases and decreases the
         position of the servo on the Claw Arm.
          */
-        if (gamepad1.a) {
+        if (gamepad2.a) {
             ClawL.setPosition(CL);
             CL = Range.clip(CL+0.005,0.18,.6);
 //            ClawR.setPosition(CR);
@@ -115,7 +115,7 @@ public class MarcNew extends LinearOpMode {
              */
             telemetry.addData("Position Claw L", ClawL.getPosition());
         }
-        if (gamepad1.b){
+        if (gamepad2.b){
             ClawL.setPosition(CL);
             CL = Range.clip(CL-0.005,.18,.6);
 //            ClawR.setPosition(CR);
@@ -129,10 +129,10 @@ public class MarcNew extends LinearOpMode {
         /*
         The Latch is the servo that keeps the robot connected to the launcher.
          */
-        if (gamepad1.y){
+        if (gamepad2.y){
             Latch.setPosition(0);
         }
-        if (gamepad1.x){
+        if (gamepad2.x){
             Latch.setPosition(1);
         }
     }
@@ -152,20 +152,20 @@ public class MarcNew extends LinearOpMode {
             BackRight.setPower(wheels.backRight);
         }
         // Determining the power of the Lift if the left trigger passes .6
-        if (gamepad1.left_trigger >0.6){
-            Lift.setPower(gamepad1.left_trigger);
+        if (gamepad2.left_trigger >0.6){
+            Lift.setPower(gamepad2.left_trigger);
         }else
             // Having it go in the other direction.
-            if (gamepad1.right_trigger > 0.6){
-            Lift.setPower(-gamepad1.right_trigger);
+            if (gamepad2.right_trigger > 0.6){
+            Lift.setPower(-gamepad2.right_trigger);
             }else{
                 Lift.setPower(0.0);
             }
         //Condition for the arm for the servo arm's motor.
-        if (gamepad1.right_bumper){
+        if (gamepad2.right_bumper){
             Joint.setPower(0.3);
         }else
-        if (gamepad1.left_bumper){
+        if (gamepad2.left_bumper){
             Joint.setPower(-0.3);
         }else
         {

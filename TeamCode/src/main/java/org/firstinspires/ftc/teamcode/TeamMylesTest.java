@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "TeamMylesTest", group = "TeamB")
+@TeleOp
 public class TeamMylesTest extends LinearOpMode {
     private DcMotor FrontR,FrontL,BackR,BackL, IntakeL,IntakeR;
 
@@ -24,6 +25,7 @@ public class TeamMylesTest extends LinearOpMode {
         BackL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         IntakeL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         IntakeR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackL.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
         while (opModeIsActive()){
@@ -40,15 +42,15 @@ public class TeamMylesTest extends LinearOpMode {
         FrontR.setPower(-Power2);
         FrontL.setPower(Power1);
         BackR.setPower(-Power2);
-        BackL.setPower(-Power1);
+        BackL.setPower(- gamepad1.left_stick_y);
         telemetry.addLine("How fast are you?");
         telemetry.addData("FAST AS FUCK BOI", Power1);
     }
 
     private void CollectionSys(){
         if (gamepad1.left_bumper){
-            IntakeL.setPower(1);
-            IntakeR.setPower(1);
+            IntakeL.setPower(-1);
+            IntakeR.setPower(-1);
         }else if (gamepad1.right_bumper){
             IntakeL.setPower(-1);
             IntakeR.setPower(-1);
