@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 public class ProdigyTesting extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,
-            Joint;
+            Joint,Joint2;
     private Servo Phone, ClawL,ClawR,Latch;
     private double FRP,FLP,BRP,BLP;
     private double x,CL = 0,CR = 0;
@@ -29,6 +29,7 @@ public class ProdigyTesting extends LinearOpMode {
         BackRight = hardwareMap.dcMotor.get("BackRight");
         BackLeft = hardwareMap.dcMotor.get("BackLeft");
         Joint = hardwareMap.dcMotor.get("Joint");
+        Joint2 = hardwareMap.dcMotor.get("Joint2");
         Lift = hardwareMap.dcMotor.get("Lift");
         Phone = hardwareMap.servo.get("Camera");
         ClawR = hardwareMap.servo.get("ClawR");
@@ -43,6 +44,7 @@ public class ProdigyTesting extends LinearOpMode {
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Joint.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Joint2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
          /*
          Setting the Direction of each motor where needed
@@ -61,6 +63,7 @@ public class ProdigyTesting extends LinearOpMode {
         BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Joint.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Joint2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -107,9 +110,7 @@ public class ProdigyTesting extends LinearOpMode {
         if (gamepad2.a) {
             ClawL.setPosition(CL);
             CL = Range.clip(CL+0.005,0.18,.6);
-//            ClawR.setPosition(CR);
-//            CR = Range.clip(CR-0.005,0.59,.9);
-//            telemetry.addData("Position Claw R",ClawR.getPosition());
+
             /*
             Telemetry to get the position of the claw for troubleshooting.
              */
@@ -118,9 +119,6 @@ public class ProdigyTesting extends LinearOpMode {
         if (gamepad2.b){
             ClawL.setPosition(CL);
             CL = Range.clip(CL-0.005,.18,.6);
-//            ClawR.setPosition(CR);
-//            CR = Range.clip(CR+0.005,0.59,.9);
-//            telemetry.addData("Position Claw R",ClawR.getPosition());
             /*
             Telemetry to get the position of the claw for troubleshooting.
              */
@@ -129,10 +127,10 @@ public class ProdigyTesting extends LinearOpMode {
         /*
         The Latch is the servo that keeps the robot connected to the launcher.
          */
-        if (gamepad2.y){
+        if (gamepad1.y){
             Latch.setPosition(0);
         }
-        if (gamepad2.x){
+        if (gamepad1.x){
             Latch.setPosition(1);
         }
     }
@@ -152,24 +150,30 @@ public class ProdigyTesting extends LinearOpMode {
             BackRight.setPower(wheels.backRight);
         }
         // Determining the power of the Lift if the left trigger passes .6
-        if (gamepad2.left_trigger >0.6){
-            Lift.setPower(gamepad2.left_trigger);
+        if (gamepad1.left_trigger >0.6){
+            Lift.setPower(gamepad1.left_trigger);
         }else
             // Having it go in the other direction.
-            if (gamepad2.right_trigger > 0.6){
-            Lift.setPower(-gamepad2.right_trigger);
+            if (gamepad1.right_trigger > 0.6){
+            Lift.setPower(-gamepad1.right_trigger);
             }else{
                 Lift.setPower(0.0);
             }
         //Condition for the arm for the servo arm's motor.
-        if (gamepad2.right_bumper){
-            Joint.setPower(0.6);
-        }else
-        if (gamepad2.left_bumper){
-            Joint.setPower(-0.6);
-        }else
-        {
-            Joint.setPower(0.0);
+//        if (gamepad2.right_bumper){
+//            Joint.setPower(0.6);
+//        }else
+//        if (gamepad2.left_bumper){
+//            Joint.setPower(-0.6);
+//        }else
+//        {
+//            Joint.setPower(0.0);
+//        }
+        if (gamepad2.left_stick_y != 0){
+            Joint.setPower(gamepad2.left_stick_y);
+        }
+        else if (gamepad2.right_stick_y != 0){
+            Joint2.setPower(gamepad2.right_stick_y);
         }
     }
 }
