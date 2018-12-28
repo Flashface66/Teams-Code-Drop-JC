@@ -42,7 +42,7 @@ public class TeamMylesTest extends LinearOpMode {
         BackR.setPower(-Power2);
         BackL.setPower(-Power1);
         telemetry.addLine("How fast are you?");
-        telemetry.addData("FAST AS FUCK BOI", Power1);
+        telemetry.addData("Very fast man", Power1);
     }
 
     private void CollectionSys(){
