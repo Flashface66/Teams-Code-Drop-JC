@@ -54,10 +54,10 @@ public class Mecanum {
                                           double leftStickY,
                                           double rightStickX,
                                           double rightStickY) {
-        double vD = Math.min(Math.sqrt(Math.pow(leftStickX, 2) +
-                                       Math.pow(leftStickY, 2)),
+        double vD = Math.min(Math.sqrt(Math.pow(leftStickY, 2) +
+                                       Math.pow(leftStickX, 2)),
                              1);
-        double thetaD = Math.atan2(-leftStickX, -leftStickY);
+        double thetaD = Math.atan2(-leftStickY, -leftStickX);
         double vTheta = -rightStickX;
         return new Motion(vD, thetaD, vTheta);
     }
@@ -107,10 +107,10 @@ public class Mecanum {
         double thetaD = motion.thetaD;
         double vTheta = motion.vTheta;
 
-        double frontLeft = vD * Math.sin(-thetaD + Math.PI / 4) - vTheta;
-        double frontRight  = vD * Math.cos(-thetaD + Math.PI / 4) + vTheta;
-        double backLeft = vD * Math.cos(-thetaD + Math.PI / 4) - vTheta;
-        double backRight = vD * Math.sin(-thetaD + Math.PI / 4) + vTheta;
+        double frontLeft = vD * (1/Math.sin(-thetaD + Math.PI / 4)) - vTheta;
+        double frontRight  = vD * (1/Math.cos(-thetaD + Math.PI / 4)) + vTheta;
+        double backLeft = vD * (1/Math.cos(-thetaD + Math.PI / 4)) - vTheta;
+        double backRight = vD * (1/Math.sin(-thetaD + Math.PI / 4)) + vTheta;
         return new Wheels(frontLeft, frontRight,
                           backLeft, backRight);
     }

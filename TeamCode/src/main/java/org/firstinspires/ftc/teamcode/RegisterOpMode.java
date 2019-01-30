@@ -7,8 +7,8 @@ public class RegisterOpMode {
     @OpModeRegistrar
     public static void registerMyOpModes(OpModeManager manager){
         manager.register("Prodigy", MarcNew.class);
+        manager.register("ProdigyTesting", ProdigyTesting.class);
         manager.register("TeamMylesTest", TeamMylesTest.class);
-        manager.register("MecaTest", Mecanumn_Test.class);
 
 
     }

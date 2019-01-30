@@ -12,9 +12,10 @@ public class ProdigyTesting extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,
             Joint,Joint2;
-    private Servo Phone, ClawL,ClawR,Latch;
+    private Servo Phone, ClawL,ClawR,Latch,
+            IntakeR,IntakeL;
     private double FRP,FLP,BRP,BLP;
-    private double x,CL = 0,CR = 0;
+    private double x,y,CL = 0,CR = 0;
     private final boolean shouldMecanumDrive = true;
 
     @Override
@@ -31,9 +32,8 @@ public class ProdigyTesting extends LinearOpMode {
         Joint = hardwareMap.dcMotor.get("Joint");
         Joint2 = hardwareMap.dcMotor.get("Joint2");
         Lift = hardwareMap.dcMotor.get("Lift");
-        Phone = hardwareMap.servo.get("Camera");
-        ClawR = hardwareMap.servo.get("ClawR");
-        ClawL = hardwareMap.servo.get("ClawL");
+        IntakeL = hardwareMap.servo.get("IntakeL");
+        IntakeR = hardwareMap.servo.get("IntakeR");
         Latch = hardwareMap.servo.get("Latch");
          /*
         Setting the stops for the Robot.
@@ -74,9 +74,6 @@ public class ProdigyTesting extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-        Phone.setPosition(x);
-        ClawL.setPosition(CL);
-        ClawR.setPosition(CR);
         while (opModeIsActive()){
 
             Servos();
@@ -93,37 +90,38 @@ public class ProdigyTesting extends LinearOpMode {
         Using the dpad to incrementally map the position of the Phone's servo with each press of the
         dpad.
          */
-        if (gamepad1.dpad_up){
-            Phone.setPosition(x);
-            x = Range.clip(x+0.005,0.001,1);
-            telemetry.addData("Position",Phone.getPosition());
+        if (gamepad2.a){
+            IntakeL.setPosition(x);
+            IntakeR.setPosition(y);
+            x = Range.clip(x+0.08,0.002,1);
+            y = Range.clip(y-0.08,0.002,1);
+            telemetry.addData("Position",IntakeR.getPosition());
+            telemetry.addData("Position",IntakeL.getPosition());
         }
-        if (gamepad1.dpad_down){
-            Phone.setPosition(x);
-            x = Range.clip(x-0.005,0.001,1);
-            telemetry.addData("Position",Phone.getPosition());
+        if (gamepad2.b){
+            IntakeL.setPosition(x);
+            IntakeR.setPosition(y);
+            x = Range.clip(x-0.08,0.002,1);
+            y = Range.clip(y+0.08,0.002,1);
+            telemetry.addData("Position",IntakeL.getPosition());
+            telemetry.addData("Position",IntakeR.getPosition());
+        }if (gamepad2.y){
+            IntakeL.setPosition(x);
+            IntakeR.setPosition(y);
+            x = Range.clip(x+0.08,0.002,1);
+            telemetry.addData("Position",IntakeL.getPosition());
+            telemetry.addData("Position",IntakeR.getPosition());
+        }if (gamepad2.x){
+            IntakeL.setPosition(x);
+            IntakeR.setPosition(y);
+            y = Range.clip(y-0.08,0.002,1);
+            telemetry.addData("Position",IntakeL.getPosition());
+            telemetry.addData("Position",IntakeR.getPosition());
         }
         /*
         Similar to the movement of the phone's servo as it incrementally increases and decreases the
         position of the servo on the Claw Arm.
          */
-        if (gamepad2.a) {
-            ClawL.setPosition(CL);
-            CL = Range.clip(CL+0.005,0.18,.6);
-
-            /*
-            Telemetry to get the position of the claw for troubleshooting.
-             */
-            telemetry.addData("Position Claw L", ClawL.getPosition());
-        }
-        if (gamepad2.b){
-            ClawL.setPosition(CL);
-            CL = Range.clip(CL-0.005,.18,.6);
-            /*
-            Telemetry to get the position of the claw for troubleshooting.
-             */
-            telemetry.addData("Position Claw L", ClawL.getPosition());
-        }
         /*
         The Latch is the servo that keeps the robot connected to the launcher.
          */
@@ -172,8 +170,15 @@ public class ProdigyTesting extends LinearOpMode {
         if (gamepad2.left_stick_y != 0){
             Joint.setPower(gamepad2.left_stick_y);
         }
-        else if (gamepad2.right_stick_y != 0){
+        else {
+            Joint.setPower(0.01);
+        }
+         if (gamepad2.right_stick_y != 0){
             Joint2.setPower(gamepad2.right_stick_y);
         }
+        else
+         {
+             Joint2.setPower(0.01);
+         }
     }
 }
