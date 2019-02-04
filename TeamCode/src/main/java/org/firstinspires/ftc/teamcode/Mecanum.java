@@ -57,7 +57,7 @@ public class Mecanum {
         double vD = Math.min(Math.sqrt(Math.pow(leftStickY, 2) +
                                        Math.pow(leftStickX, 2)),
                              1);
-        double thetaD = Math.atan2(-leftStickY, -leftStickX);
+        double thetaD = Math.atan2(leftStickY, leftStickX);
         double vTheta = -rightStickX;
         return new Motion(vD, thetaD, vTheta);
     }

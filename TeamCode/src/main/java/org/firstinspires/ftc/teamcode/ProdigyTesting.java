@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,9 +13,8 @@ public class ProdigyTesting extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,
             Joint,Joint2;
-    private Servo Phone, ClawL,ClawR,Latch,
-            IntakeR,IntakeL;
-    private double FRP,FLP,BRP,BLP;
+    private Servo IntakeR,IntakeL;
+    private double power;
     private double x,y,CL = 0,CR = 0;
     private final boolean shouldMecanumDrive = true;
 
@@ -34,7 +34,6 @@ public class ProdigyTesting extends LinearOpMode {
         Lift = hardwareMap.dcMotor.get("Lift");
         IntakeL = hardwareMap.servo.get("IntakeL");
         IntakeR = hardwareMap.servo.get("IntakeR");
-        Latch = hardwareMap.servo.get("Latch");
          /*
         Setting the stops for the Robot.
             This makes the motor's activity, once their value is zero, to act as a brake.
@@ -70,6 +69,7 @@ public class ProdigyTesting extends LinearOpMode {
         BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Joint.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Joint2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         telemetry.update();
 
@@ -83,54 +83,31 @@ public class ProdigyTesting extends LinearOpMode {
 
     }
 
-    private void Servos(){
+    private void Servos() {
         /*
         Servo movements for the robot
-
-        Using the dpad to incrementally map the position of the Phone's servo with each press of the
-        dpad.
          */
         if (gamepad2.a){
-            IntakeL.setPosition(x);
-            IntakeR.setPosition(y);
-            x = Range.clip(x+0.08,0.002,1);
-            y = Range.clip(y-0.08,0.002,1);
-            telemetry.addData("Position",IntakeR.getPosition());
-            telemetry.addData("Position",IntakeL.getPosition());
+            IntakeR.setPosition(.5);
+            IntakeL.setPosition(.5);
         }
         if (gamepad2.b){
-            IntakeL.setPosition(x);
-            IntakeR.setPosition(y);
-            x = Range.clip(x-0.08,0.002,1);
-            y = Range.clip(y+0.08,0.002,1);
-            telemetry.addData("Position",IntakeL.getPosition());
-            telemetry.addData("Position",IntakeR.getPosition());
+            IntakeR.setPosition(-1);
+            IntakeL.setPosition(1);
         }if (gamepad2.y){
-            IntakeL.setPosition(x);
-            IntakeR.setPosition(y);
-            x = Range.clip(x+0.08,0.002,1);
-            telemetry.addData("Position",IntakeL.getPosition());
-            telemetry.addData("Position",IntakeR.getPosition());
-        }if (gamepad2.x){
-            IntakeL.setPosition(x);
-            IntakeR.setPosition(y);
-            y = Range.clip(y-0.08,0.002,1);
-            telemetry.addData("Position",IntakeL.getPosition());
-            telemetry.addData("Position",IntakeR.getPosition());
+            IntakeR.setPosition(1);
+            IntakeL.setPosition(-1);
         }
-        /*
-        Similar to the movement of the phone's servo as it incrementally increases and decreases the
-        position of the servo on the Claw Arm.
-         */
-        /*
-        The Latch is the servo that keeps the robot connected to the launcher.
-         */
-        if (gamepad1.y){
-            Latch.setPosition(0);
+        if (gamepad2.x){
+            IntakeR.setPosition(0.5);
+            IntakeL.setPosition(0.5);
         }
-        if (gamepad1.x){
-            Latch.setPosition(1);
+        if (gamepad2.left_trigger > 0.3){
+            power = Range.clip(power + 0.001,-20,20);
+            IntakeR.setPosition(power);
+            IntakeL.setPosition(power);
         }
+
     }
 
     private void Movements(){
@@ -157,28 +134,18 @@ public class ProdigyTesting extends LinearOpMode {
             }else{
                 Lift.setPower(0.0);
             }
-        //Condition for the arm for the servo arm's motor.
-//        if (gamepad2.right_bumper){
-//            Joint.setPower(0.6);
-//        }else
-//        if (gamepad2.left_bumper){
-//            Joint.setPower(-0.6);
-//        }else
-//        {
-//            Joint.setPower(0.0);
-//        }
         if (gamepad2.left_stick_y != 0){
             Joint.setPower(gamepad2.left_stick_y);
         }
         else {
-            Joint.setPower(0.01);
+            Joint.setPower(0.0);
         }
          if (gamepad2.right_stick_y != 0){
             Joint2.setPower(gamepad2.right_stick_y);
         }
         else
          {
-             Joint2.setPower(0.01);
+             Joint2.setPower(0.0);
          }
     }
 }
