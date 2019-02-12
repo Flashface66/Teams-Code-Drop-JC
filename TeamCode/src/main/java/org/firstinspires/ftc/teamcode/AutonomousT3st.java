@@ -44,7 +44,6 @@ private void RunWithEncAll(){
 }
 private void StopResetEnc(DcMotor motor){
     motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
 }
 private void StopResetAllEnc(){
     FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -70,7 +69,7 @@ private void RunToPosDrive(int inches, double power){
     BackLeft.setTargetPosition(inches);
 }
 private int Busy(DcMotor motor){
-    int val = 0;
+    int val;
     if (!motor.isBusy()) {
         motor.setPower(0);
         val = 1;
@@ -80,7 +79,7 @@ private int Busy(DcMotor motor){
     return val;
 }
 private int BusyDrive() {
-    int val = 0;
+    int val;
     if (!FrontRight.isBusy() && !FrontLeft.isBusy() &&
             !BackLeft.isBusy() && !BackLeft.isBusy()) {
         FrontRight.setPower(0);
