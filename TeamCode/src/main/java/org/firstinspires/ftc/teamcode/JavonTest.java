@@ -1,15 +1,15 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
 // @author Colin 'Bart' Campbell & Javon 'Utility Pole' Peart
-@TeleOp(name = "JavonTest")
+@TeleOp(name = "JavonTeamMyles")
 public class JavonTest extends LinearOpMode
 {
 
@@ -27,6 +27,7 @@ public class JavonTest extends LinearOpMode
         ChainLift = hardwareMap.dcMotor.get("ChainLift");
         trayDispL = hardwareMap.servo.get("TrayDispL");
         trayDispR = hardwareMap.servo.get("TrayDispR");
+        trayDispL.setDirection(Servo.Direction.REVERSE);
         // TODO inverse either of the servos if anything goes wrong in testing
 
         IntakeL = hardwareMap.servo.get("IntakeL");
@@ -57,30 +58,30 @@ public class JavonTest extends LinearOpMode
         Power1 = Range.clip(gamepad1.left_stick_y, -1, 1);
         Power2 = Range.clip(gamepad1.right_stick_y, -1, 1);
 
-        FrontLeft.setPower(-Power2);
-        BackLeft.setPower (-Power2);
+        FrontLeft.setPower(Power2);
+        BackLeft.setPower (Power2);
 
-        BackRight.setPower (Power1);
-        FrontRight.setPower(Power1);
+        BackRight.setPower (-Power1);
+        FrontRight.setPower(-Power1);
 
         telemetry.addLine("Robots as seen...");
         telemetry.addData("In their Natural Habitat", Power1);
     }
 
     private void CollectionSys(){
-        if (gamepad1.left_bumper){
+        if (gamepad1.a){
             IntakeL.setPosition(-1);
             IntakeR.setPosition(-1);
         }
-        else if (gamepad1.right_bumper)
+        else if (gamepad1.b)
         {
             IntakeL.setPosition(1);
             IntakeR.setPosition(1);
         }
         else
         {
-            IntakeL.setPosition(0);
-            IntakeR.setPosition(0);
+            IntakeL.setPosition(0.5);
+            IntakeR.setPosition(0.5);
         }
     }
 
@@ -98,7 +99,7 @@ public class JavonTest extends LinearOpMode
             ChainLift.setPower(0);
         }
 
-        //Events for tray dispenser sevos
+        //Events for tray dispenser servos
         if (gamepad1.dpad_left) {
             trayDispL.setPosition(1.0);
             trayDispR.setPosition(1.0);
@@ -108,7 +109,6 @@ public class JavonTest extends LinearOpMode
             trayDispR.setPosition(-1.0);
         } else
         {
-            // set to .5 for no continuous rotation
             trayDispL.setPosition(0.5);
             trayDispR.setPosition(0.5);
         }
