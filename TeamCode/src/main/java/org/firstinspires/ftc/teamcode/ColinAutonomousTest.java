@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+// Ask me ( Colin ) if you don't understand what I did before you touch the code : )
+
 @Autonomous(name = "ColinAutonomousTest")
 public class ColinAutonomousTest extends LinearOpMode
 {
