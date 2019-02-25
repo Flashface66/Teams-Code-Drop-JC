@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Auto Quick Test")
+
 public class AutonomousT3st extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
-// @Authors Chavaughn Wilkins, Colin  Campbell & Javon Peart
+// @Authors Colin  Campbell & Javon Peart
 @TeleOp(name = "JavonTeamMyles")
 
 public class JavonTest extends LinearOpMode
