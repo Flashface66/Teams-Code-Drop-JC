@@ -7,15 +7,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "3981AutoTesting")
-public class Autonomous3981 extends LinearOpMode {
+@Autonomous(name = "6899 AutoTesting")
+public class Autonomous6899 extends LinearOpMode {
 
     private GoldAlignDetector detector;
     private DcMotor FrontLeft, BackLeft, FrontRight, BackRight,
             ChainLift, HookLift;
     private Servo trayDispL, trayDispR,
             IntakeR,IntakeL;
+    private ElapsedTime runtime = new ElapsedTime();
+
+    Hardware6899 Bot = new Hardware6899();
 
 
 
@@ -39,29 +43,12 @@ public class Autonomous3981 extends LinearOpMode {
         detector.ratioScorer.weight = 5; //
         detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
 
-        //Wheel Motors
-        FrontLeft =  hardwareMap.dcMotor.get("FrontLeft");
-        FrontRight =  hardwareMap.dcMotor.get("FrontRight");
-        BackLeft = hardwareMap.dcMotor.get("BackLeft");
-        BackRight = hardwareMap.dcMotor.get("BackRight");
+        Bot.init(hardwareMap);
 
-        //Collection Devices
-        HookLift = hardwareMap.dcMotor.get("HookLift");
-        ChainLift = hardwareMap.dcMotor.get("ChainLift");
-        trayDispL = hardwareMap.servo.get("TrayDispL");
-        trayDispR = hardwareMap.servo.get("TrayDispR");
-        trayDispL.setDirection(Servo.Direction.REVERSE);
-
-        //Lowest Intake Servos
-        IntakeL = hardwareMap.servo.get("IntakeL");
-        IntakeR = hardwareMap.servo.get("IntakeR");
-
-
-        FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ChainLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         waitForStart();
 
@@ -72,7 +59,10 @@ public class Autonomous3981 extends LinearOpMode {
     }
 
     private void ForwardEnc(double power, int inches){
-
+        FrontLeft.setPower(1);
+        FrontRight.setPower(1);
+        BackLeft.setPower(1);
+        BackLeft.setPower(1);
     }
 
 }
