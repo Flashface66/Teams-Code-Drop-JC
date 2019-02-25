@@ -7,7 +7,5 @@ public class RegisterOpMode {
     @OpModeRegistrar
     public static void registerMyOpModes(OpModeManager manager){
 
-
-
     }
 }
