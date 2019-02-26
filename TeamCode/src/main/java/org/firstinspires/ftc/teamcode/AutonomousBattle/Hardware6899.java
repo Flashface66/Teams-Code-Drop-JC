@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * This is the hardware for the 6899 robot or Myles' bot.
  * Add the necessary hardware required here following the format given
+ * Do not edit unless you are sure of what you're doing - Chavaughn
  */
 public class Hardware6899 {
 
