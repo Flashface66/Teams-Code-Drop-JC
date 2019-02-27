@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
-// @Authors Chavaughn Wilkins, Colin  Campbell & Javon Peart
-@TeleOp(name = "JavonTeamMyles")
+// @Authors Colin  Campbell & Javon Peart
+@TeleOp(name = "JavonTest")
 
 public class JavonTest extends LinearOpMode
 {
@@ -43,15 +43,18 @@ public class JavonTest extends LinearOpMode
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ChainLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
         while(opModeIsActive()){
             MovementSys();
+
             CollectionSys();
+
             trayControlSys();
+
             HookSys();
+
             telemetry.update();
         }
 
@@ -77,12 +80,12 @@ public class JavonTest extends LinearOpMode
     }
 
     private void CollectionSys(){
-        if (gamepad1.right_bumper){
+        if (gamepad2.right_bumper){
             IntakeL.setPosition(-1);
             IntakeR.setPosition(1);
         }
 
-        else if (gamepad1.left_bumper){
+        else if (gamepad2.left_bumper){
             IntakeL.setPosition(1);
             IntakeR.setPosition(-1);
         }
@@ -95,11 +98,11 @@ public class JavonTest extends LinearOpMode
 
     private void trayControlSys(){
         // Control and Power for chain lift
-        if (gamepad1.dpad_up){
+        if (gamepad2.dpad_up){
             ChainLift.setPower(1);
         }
 
-        else if(gamepad1.dpad_down){
+        else if(gamepad2.dpad_down){
             ChainLift.setPower(-1);
         }
 
@@ -108,12 +111,12 @@ public class JavonTest extends LinearOpMode
         }
 
         //Control and Power for Tray Dispenser servos
-        if (gamepad1.dpad_left) {
+        if (gamepad2.b) {
             trayDispL.setPosition(1.0);
             trayDispR.setPosition(1.0);
         }
 
-        else if (gamepad1.dpad_right) {
+        else if (gamepad2.a) {
             trayDispL.setPosition(-1.0);
             trayDispR.setPosition(-1.0);
         }
@@ -126,11 +129,11 @@ public class JavonTest extends LinearOpMode
 
     private void HookSys(){
         //Control for Hook Lift
-        if (gamepad1.y) {
+        if (gamepad2.y) {
             HookLift.setPower(1);
         }
 
-        else if ( gamepad1.x) {
+        else if ( gamepad2.x) {
             HookLift.setPower(-1);
         }
         else {
