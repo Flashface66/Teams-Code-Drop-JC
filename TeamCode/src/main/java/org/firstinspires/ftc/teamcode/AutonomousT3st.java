@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Auto Quick Test")
+
 public class AutonomousT3st extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,
@@ -15,7 +16,7 @@ public class AutonomousT3st extends LinearOpMode {
     private Servo IntakeL,IntakeR;
     private enum CompetitionLegs{
                                 Delatch, Mineral, Marker, Crater} CompetitionLegs Legs;
-    private double TimeOut = 5;
+    private double TimeOut = 5000;
     private ElapsedTime runtime = new ElapsedTime();
 
 private void RunWithEnc(DcMotor motor){

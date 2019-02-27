@@ -9,7 +9,9 @@ import com.qualcomm.robotcore.util.Range;
 
 
 // @Authors Colin  Campbell & Javon Peart
-@TeleOp(name = "JavonTest")
+
+@TeleOp(name = "JavonTeamMyles")
+
 
 public class JavonTest extends LinearOpMode
 {
@@ -80,12 +82,20 @@ public class JavonTest extends LinearOpMode
     }
 
     private void CollectionSys(){
+
         if (gamepad2.right_bumper){
+
+        if (gamepad2.right_trigger > 1){
+
             IntakeL.setPosition(-1);
             IntakeR.setPosition(1);
         }
 
+
         else if (gamepad2.left_bumper){
+
+        else if (gamepad2.left_trigger < 1){
+
             IntakeL.setPosition(1);
             IntakeR.setPosition(-1);
         }
@@ -96,7 +106,8 @@ public class JavonTest extends LinearOpMode
         }
     }
 
-    private void trayControlSys(){
+    private void trayControlSys()
+        {
         // Control and Power for chain lift
         if (gamepad2.dpad_up){
             ChainLift.setPower(1);
@@ -111,12 +122,20 @@ public class JavonTest extends LinearOpMode
         }
 
         //Control and Power for Tray Dispenser servos
+
         if (gamepad2.b) {
+
+        if (gamepad2.y) {
+
             trayDispL.setPosition(1.0);
             trayDispR.setPosition(1.0);
         }
 
+
         else if (gamepad2.a) {
+
+        else if (gamepad2.x) {
+
             trayDispL.setPosition(-1.0);
             trayDispR.setPosition(-1.0);
         }
@@ -129,16 +148,22 @@ public class JavonTest extends LinearOpMode
 
     private void HookSys(){
         //Control for Hook Lift
+
         if (gamepad2.y) {
             HookLift.setPower(1);
         }
 
         else if ( gamepad2.x) {
+
+        if (gamepad2.b) {
+            HookLift.setPower(1);
+        }
+
+        else if ( gamepad2.a) {
+
             HookLift.setPower(-1);
         }
         else {
             HookLift.setPower(0);
         }
     }
-}
-
