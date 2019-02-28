@@ -13,18 +13,17 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "JavonTeamMyles")
 
 
-public class JavonTest extends LinearOpMode
-{
+public class JavonTest extends LinearOpMode {
 
     private DcMotor FrontLeft, BackLeft, FrontRight, BackRight, ChainLift, HookLift;
-    private Servo trayDispL, trayDispR,IntakeR,IntakeL;
+    private Servo trayDispL, trayDispR, IntakeR, IntakeL;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         //Wheel Motors
-        FrontLeft =  hardwareMap.dcMotor.get("FrontLeft");
-        FrontRight =  hardwareMap.dcMotor.get("FrontRight");
+        FrontLeft = hardwareMap.dcMotor.get("FrontLeft");
+        FrontRight = hardwareMap.dcMotor.get("FrontRight");
         BackLeft = hardwareMap.dcMotor.get("BackLeft");
         BackRight = hardwareMap.dcMotor.get("BackRight");
 
@@ -48,7 +47,7 @@ public class JavonTest extends LinearOpMode
 
         waitForStart();
 
-        while(opModeIsActive()){
+        while (opModeIsActive()) {
             MovementSys();
 
             CollectionSys();
@@ -71,99 +70,80 @@ public class JavonTest extends LinearOpMode
 
         //Powers Set for Wheel Motors
         FrontLeft.setPower(Power2);
-        BackLeft.setPower (Power2);
-        BackRight.setPower (-Power1);
+        BackLeft.setPower(Power2);
+        BackRight.setPower(-Power1);
         FrontRight.setPower(-Power1);
-
 
 
         telemetry.addLine("Robots as seen...");
         telemetry.addData("In their Natural Habitat ", Power1);
     }
 
-    private void CollectionSys(){
+    private void CollectionSys() {
 
-        if (gamepad2.right_bumper){
+        if (gamepad2.right_bumper) {
 
-        if (gamepad2.right_trigger > 1){
+            if (gamepad2.right_trigger > 1) {
 
-            IntakeL.setPosition(-1);
-            IntakeR.setPosition(1);
-        }
+                IntakeL.setPosition(-1);
+                IntakeR.setPosition(1);
+            } else if (gamepad2.left_bumper) {
+            } else if (gamepad2.left_trigger < 1) {
 
-
-        else if (gamepad2.left_bumper){
-
-        else if (gamepad2.left_trigger < 1){
-
-            IntakeL.setPosition(1);
-            IntakeR.setPosition(-1);
-        }
-
-        else{
-            IntakeL.setPosition(0.5);
-            IntakeR.setPosition(0.5);
+                IntakeL.setPosition(1);
+                IntakeR.setPosition(-1);
+            } else {
+                IntakeL.setPosition(0.5);
+                IntakeR.setPosition(0.5);
+            }
         }
     }
 
-    private void trayControlSys()
-        {
+    private void trayControlSys() {
         // Control and Power for chain lift
-        if (gamepad2.dpad_up){
+        if (gamepad2.dpad_up) {
             ChainLift.setPower(1);
-        }
-
-        else if(gamepad2.dpad_down){
+        } else if (gamepad2.dpad_down) {
             ChainLift.setPower(-1);
-        }
-
-        else{
+        } else {
             ChainLift.setPower(0);
         }
 
         //Control and Power for Tray Dispenser servos
 
         if (gamepad2.b) {
+        }
 
         if (gamepad2.y) {
 
             trayDispL.setPosition(1.0);
             trayDispR.setPosition(1.0);
-        }
-
-
-        else if (gamepad2.a) {
-
-        else if (gamepad2.x) {
+        } else if (gamepad2.a) {
+        } else if (gamepad2.x) {
 
             trayDispL.setPosition(-1.0);
             trayDispR.setPosition(-1.0);
-        }
-
-        else{
+        } else {
             trayDispL.setPosition(0.5);
             trayDispR.setPosition(0.5);
         }
     }
 
-    private void HookSys(){
+    private void HookSys() {
         //Control for Hook Lift
 
         if (gamepad2.y) {
             HookLift.setPower(1);
-        }
+        } else if (gamepad2.x) {
 
-        else if ( gamepad2.x) {
+            if (gamepad2.b) {
+                HookLift.setPower(1);
+            } else if (gamepad2.a) {
 
-        if (gamepad2.b) {
-            HookLift.setPower(1);
-        }
-
-        else if ( gamepad2.a) {
-
-            HookLift.setPower(-1);
-        }
-        else {
-            HookLift.setPower(0);
+                HookLift.setPower(-1);
+            } else {
+                HookLift.setPower(0);
+            }
         }
     }
+}

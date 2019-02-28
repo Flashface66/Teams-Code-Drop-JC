@@ -39,6 +39,9 @@ public class Hardware6899 {
         BackLeft = hwmap.get(DcMotor.class,"BackLeft");
         BackRight = hwmap.get(DcMotor.class,"BackRight");
 
+        FrontRight.setDirection(DcMotor.Direction.REVERSE);
+        BackRight.setDirection(DcMotor.Direction.REVERSE);
+
         //Collection Devices
         HookLift = hwmap.get(DcMotor.class,"HookLift");
         ChainLift = hwmap.get(DcMotor.class,"ChainLift");
@@ -55,12 +58,14 @@ public class Hardware6899 {
         FrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ChainLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //The behaviour of the motors when it is set to 0 power
         FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ChainLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         FrontLeft.setPower(0);
         FrontRight.setPower(0);
