@@ -8,10 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "6899 Autonomous V1")
+@Autonomous(name = "Autonomous V1")
 public class Autonomous6899 extends LinearOpMode {
 
-    Hardware6899 Bot;
+    Hardware6899 Bot = new Hardware6899();
 
     private enum CompetitionLegs{
         Delatch,Vuforia, Mineral, Marker, Crater, Finish}

@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "TeleOp")
 
-
 public class TeleOp6899 extends LinearOpMode {
 
     private DcMotor FrontLeft, BackLeft, FrontRight, BackRight, ChainLift, HookLift;
