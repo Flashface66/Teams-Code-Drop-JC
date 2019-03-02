@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "TeleOp")
 
+
 public class TeleOp6899 extends LinearOpMode {
 
     private DcMotor FrontLeft, BackLeft, FrontRight, BackRight, ChainLift, HookLift;
@@ -63,23 +64,16 @@ public class TeleOp6899 extends LinearOpMode {
     private void MovementSys() {
 
         double Power1, Power2, Power3;
-        Power1 = Range.clip(gamepad1.left_stick_y, -1, 1);
-        Power2 = Range.clip(gamepad1.right_stick_x, -1, 1);
+        Power1 = Range.clip(gamepad1.left_stick_y, -.7, .7);
+        Power2 = Range.clip(gamepad1.right_stick_y, -.7, .7);
 
 
         //Powers Set for Wheel Motors
-        if (gamepad1.right_stick_x != 0) {
             FrontLeft.setPower(Power2);
             BackLeft.setPower(Power2);
-            BackRight.setPower(Power2);
-            FrontRight.setPower(Power2);
-        }
-        else{
-            FrontLeft.setPower(Power1);
-            BackLeft.setPower(Power1);
-            BackRight.setPower(-Power1);
-            FrontRight.setPower(-Power1);
-        }
+            BackRight.setPower(Power1);
+            FrontRight.setPower(Power1);
+
     }
 
     private void CollectionSys() {
