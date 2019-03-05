@@ -1,11 +1,11 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.Servo;
+        import com.qualcomm.robotcore.util.Range;
 
 
 // @Authors Colin  Campbell & Javon Peart
@@ -69,25 +69,25 @@ public class TeleOp6899 extends LinearOpMode {
 
 
         //Powers Set for Wheel Motors
-            FrontLeft.setPower(Power2);
-            BackLeft.setPower(Power2);
-            BackRight.setPower(-Power1);
-            FrontRight.setPower(-Power1);
+        FrontLeft.setPower(Power2);
+        BackLeft.setPower(Power2);
+        BackRight.setPower(-Power1);
+        FrontRight.setPower(-Power1);
 
     }
 
     private void CollectionSys() {
 
-            if (gamepad2.right_trigger > 0.2) {
+        if (gamepad2.right_trigger > 0.2) {
 
-                IntakeL.setPosition(-1);
-                IntakeR.setPosition(1);
-            }
-            else if (gamepad2.left_trigger > .2) {
+            IntakeL.setPosition(-1);
+            IntakeR.setPosition(1);
+        }
+        else if (gamepad2.left_trigger > .2) {
 
             IntakeL.setPosition(1);
             IntakeR.setPosition(-1);
-            } else {
+        } else {
             IntakeL.setPosition(0.5);
             IntakeR.setPosition(0.5);
         }
@@ -109,7 +109,7 @@ public class TeleOp6899 extends LinearOpMode {
         if (gamepad2.b) {
             trayDispL.setPosition(1.0);
             trayDispR.setPosition(1.0);
-          }
+        }
         else if (gamepad2.a) {
 
             trayDispL.setPosition(-1.0);
@@ -123,13 +123,13 @@ public class TeleOp6899 extends LinearOpMode {
     private void HookSys() {
         //Control for Hook Lift
 
-            if (gamepad2.y) {
-                HookLift.setPower(1);
-            } else if (gamepad2.x) {
+        if (gamepad2.y) {
+            HookLift.setPower(1);
+        } else if (gamepad2.x) {
 
-                HookLift.setPower(-1);
-            } else {
-                HookLift.setPower(0);
-            }
+            HookLift.setPower(-1);
+        } else {
+            HookLift.setPower(0);
         }
     }
+}
