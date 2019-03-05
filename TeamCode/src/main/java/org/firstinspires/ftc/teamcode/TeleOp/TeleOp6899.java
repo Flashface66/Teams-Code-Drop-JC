@@ -69,10 +69,10 @@ public class TeleOp6899 extends LinearOpMode {
 
 
         //Powers Set for Wheel Motors
-            FrontLeft.setPower(Power2);
-            BackLeft.setPower(Power2);
-            BackRight.setPower(-Power1);
-            FrontRight.setPower(-Power1);
+            FrontLeft.setPower(Power1);
+            BackLeft.setPower(Power1);
+            BackRight.setPower(-Power2);
+            FrontRight.setPower(-Power2);
 
     }
 
