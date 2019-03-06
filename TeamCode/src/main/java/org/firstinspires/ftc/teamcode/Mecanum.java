@@ -26,16 +26,16 @@ public class Mecanum {
      */
     public static class Motion {
         // Robot speed [-1, 1].
-        public final double vD;
+        private final double vD;
         // Robot angle while moving [0, 2pi].
-        public final double thetaD;
+        private final double thetaD;
         // Speed for changing direction [-1, 1].
-        public final double vTheta;
+        private final double vTheta;
 
         /**
          * Sets the motion to the given values.
          */
-        public Motion(double vD, double thetaD, double vTheta) {
+        private Motion(double vD, double thetaD, double vTheta) {
             this.vD = vD;
             this.thetaD = thetaD;
             this.vTheta = vTheta;
@@ -54,10 +54,8 @@ public class Mecanum {
                                           double leftStickY,
                                           double rightStickX,
                                           double rightStickY) {
-        double vD = Math.min(Math.sqrt(Math.pow(leftStickX, 2) +
-                                       Math.pow(leftStickY, 2)),
-                             1);
-        double thetaD = Math.atan2(leftStickX, leftStickY);
+        double vD = Math.min(Math.sqrt(Math.pow(leftStickY, 2)+ Math.pow(leftStickX, 2)),1);
+        double thetaD = Math.atan2(-leftStickY, -leftStickX)-Math.PI/4;
         double vTheta = -rightStickX;
         return new Motion(vD, thetaD, vTheta);
     }
@@ -75,10 +73,10 @@ public class Mecanum {
         /**
          * Sets the wheels to the given values.
          */
-        public Wheels(double frontLeft, double frontRight,
-                      double backLeft, double backRight) {
+        private Wheels(double frontLeft, double frontRight,
+                       double backLeft, double backRight) {
             List<Double> powers = Arrays.asList(frontLeft, frontRight,
-                                                backLeft, backRight);
+                    backLeft, backRight);
             clampPowers(powers);
 
             this.frontLeft = powers.get(0);
@@ -93,7 +91,7 @@ public class Mecanum {
          */
         public Wheels scaleWheelPower(double scalar) {
             return new Wheels(frontLeft * scalar, frontRight * scalar,
-                              backLeft * scalar, backRight * scalar);
+                    backLeft * scalar, backRight * scalar);
         }
     }
 
@@ -107,12 +105,12 @@ public class Mecanum {
         double thetaD = motion.thetaD;
         double vTheta = motion.vTheta;
 
-        double frontLeft = vD * (1/Math.sin(-thetaD + Math.PI / 4)) - vTheta;
-        double frontRight  = vD * (1/Math.cos(-thetaD + Math.PI / 4)) + vTheta;
-        double backLeft = vD * (1/Math.cos(-thetaD + Math.PI / 4)) - vTheta;
-        double backRight = vD * (1/Math.sin(-thetaD + Math.PI / 4)) + vTheta;
+        double frontLeft = vD * Math.cos(thetaD) + vTheta;
+        double frontRight  = vD * Math.sin(thetaD)- vTheta;
+        double backLeft = vD * Math.sin(thetaD) +vTheta;
+        double backRight = vD * Math.cos(thetaD) - vTheta;
         return new Wheels(frontLeft, frontRight,
-                          backLeft, backRight);
+                backLeft, backRight);
     }
 
     /**
@@ -120,14 +118,14 @@ public class Mecanum {
      * @param powers The motor powers to clamp.
      */
     private static void clampPowers(List<Double> powers) {
-      double minPower = Collections.min(powers);
-      double maxPower = Collections.max(powers);
-      double maxMag = Math.max(Math.abs(minPower), Math.abs(maxPower));
+        double minPower = Collections.min(powers);
+        double maxPower = Collections.max(powers);
+        double maxMag = Math.max(Math.abs(minPower), Math.abs(maxPower));
 
-      if (maxMag > 1.0) {
-        for (int i = 0; i < powers.size(); i++) {
-          powers.set(i, powers.get(i) / maxMag);
+        if (maxMag > 1.0) {
+            for (int i = 0; i < powers.size(); i++) {
+                powers.set(i, powers.get(i) / maxMag);
+            }
         }
-      }
     }
 }
