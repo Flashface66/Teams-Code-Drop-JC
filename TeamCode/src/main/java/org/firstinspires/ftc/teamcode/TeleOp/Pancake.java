@@ -109,11 +109,11 @@ public class Pancake extends LinearOpMode {
 
     private void Intake(){
         //Condition for the arm for the servo arm's motor.
-        if (gamepad2.left_trigger >0.9){
+        if (gamepad2.left_trigger >0.6){
             Arm.setPower(gamepad2.left_trigger);
             Lid.setPosition(0.5);
         }else
-            if (gamepad2.right_trigger > 0.9){
+            if (gamepad2.right_trigger > 0.6){
                 Arm.setPower(-gamepad2.right_trigger);
                 Lid.setPosition(0.5);
             }else{
@@ -134,7 +134,7 @@ public class Pancake extends LinearOpMode {
         if (gamepad2.left_stick_y !=0){
             Extend.setPower(gamepad2.left_stick_y);
         }else
-            if (gamepad1.right_stick_y !=0){
+            if (gamepad2.right_stick_y !=0){
                 Extend.setPower(-gamepad2.left_stick_y );
             }else{
                 Extend.setPower(0.0);

@@ -67,7 +67,7 @@ public class Autonomous3981 extends LinearOpMode {
 
         // Optional Tuning
         detector.alignSize = 200; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-        detector.alignPosOffset = -2; // How far from center frame to offset this alignment zone.
+        detector.alignPosOffset = -6; // How far from center frame to offset this alignment zone.
         detector.downscale = 0.4; // How much to downscale the input frames
 
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
@@ -95,8 +95,8 @@ public class Autonomous3981 extends LinearOpMode {
         goldPos = detector.getXPosition();
 
 
-        //dismount();
-        //sleep(500);
+        dismount();
+        sleep(500);
 
         delay(1000);
 
@@ -112,35 +112,35 @@ public class Autonomous3981 extends LinearOpMode {
 
         delay(1400);
 
-        if(goldPos < 170) {
-            telemetry.addLine("Going to Left side");
+        if(goldPos < 150) {
+            telemetry.addLine("Going to Right side");
             telemetry.update();
             //Forward
-            Strafe(1,0.5,300);
+            Strafe(1,0.5,500);
 
             //Left
-            RunToPosDrive(1,0.5,400);
+            RunToPosDrive(1,0.5,600);
 
             //Forward
-            Strafe(4,0.7,4000);
+            Strafe(4,0.7,3000);
 
             //Reverse
-            Strafe(2,-0.7,3000);
+            Strafe(2,-0.7,2200);
 
             //Left
-            RunToPosDrive(2,-0.5,2600);
+            RunToPosDrive(2,-0.5,2100);
 
             //Rotate Left
-            Rotate(1,0.6,1100);
+            Rotate(1,- 0.6,1100);
 
             //Right
-            RunToPosDrive(1,0.5,3800);
+            RunToPosDrive(1,0.5,3200);
 
             //Left
-            RunToPosDrive(5,-0.5,8000);
+            RunToPosDrive(5,-0.5,4000);
 
         }else if (goldPos > 500) {
-            telemetry.addLine("Going to Right Side");
+            telemetry.addLine("Going to Left Side");
             telemetry.update();
 
             //Forward
@@ -150,43 +150,45 @@ public class Autonomous3981 extends LinearOpMode {
             RunToPosDrive(1,-0.5,400);
 
             //Forward
-            Strafe(4,0.7,4000);
+            Strafe(4,0.7,3000);
 
             //Reverse
-            Strafe(2,-0.7,3000);
+            Strafe(2,-0.7,2200);
 
             //Left
-            RunToPosDrive(2,-0.5,2600);
+            RunToPosDrive(2,-0.5,2100);
 
             //Rotate Left
-            Rotate(1,0.6,1100);
+            Rotate(1,-0.6,1100);
 
             //Right
-            RunToPosDrive(1,0.5,3800);
+            RunToPosDrive(1,0.5,3200);
 
             //Left
-            RunToPosDrive(5,-0.5,8000);
+            RunToPosDrive(5,-0.5,4000);
 
         }else{
             telemetry.addLine("Going Straight");
             telemetry.update();
 
-            Strafe(4,0.7,4000);
+
+            //Forward
+            Strafe(4,0.7,3000);
 
             //Reverse
-            Strafe(2,-0.7,3000);
+            Strafe(2,-0.7,2200);
 
             //Left
-            RunToPosDrive(2,-0.5,2600);
+            RunToPosDrive(2,-0.5,2100);
 
             //Rotate Left
-            Rotate(1,0.6,1100);
+            Rotate(1,-0.6,1100);
 
             //Right
-            RunToPosDrive(1,0.5,3800);
+            RunToPosDrive(1,0.5,3200);
 
             //Left
-            RunToPosDrive(5,-0.5,8000);
+            RunToPosDrive(5,-0.5,4000);
 
         }
     }
