@@ -33,7 +33,7 @@ public class Hardware6899 {
     public void init(HardwareMap thehwmap){
         hwmap = thehwmap;
 
-        //TODO Initialize them as given below with the drive-train
+        //TODO Initialize new hardware as given below with the drive-train
         FrontLeft = hwmap.get(DcMotor.class,"FrontLeft");
         FrontRight = hwmap.get(DcMotor.class,"FrontRight");
         BackLeft = hwmap.get(DcMotor.class,"BackLeft");

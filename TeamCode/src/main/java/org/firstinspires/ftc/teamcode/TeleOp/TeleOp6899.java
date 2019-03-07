@@ -25,7 +25,7 @@ public class TeleOp6899 extends LinearOpMode {
     private     Servo       IntakeL;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
         //Wheel Motors
         FrontLeft   = hardwareMap.dcMotor.get("FrontLeft");
@@ -160,7 +160,7 @@ public class TeleOp6899 extends LinearOpMode {
         else if (gamepad2.x) {
             telemetry.addLine("Hook Lift");
             HookLift.setPower(-1);
-            
+
         }
         else {
             HookLift.setPower(0);
