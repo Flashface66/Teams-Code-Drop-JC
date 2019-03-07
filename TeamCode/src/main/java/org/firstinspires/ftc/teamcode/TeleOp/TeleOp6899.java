@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
         import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
         import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.DcMotorSimple;
         import com.qualcomm.robotcore.hardware.Servo;
         import com.qualcomm.robotcore.util.Range;
 
@@ -22,24 +23,25 @@ public class TeleOp6899 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         //Wheel Motors
-        FrontLeft = hardwareMap.dcMotor.get("FrontLeft");
-        FrontRight = hardwareMap.dcMotor.get("FrontRight");
-        BackLeft = hardwareMap.dcMotor.get("BackLeft");
-        BackRight = hardwareMap.dcMotor.get("BackRight");
+        FrontLeft   = hardwareMap.dcMotor.get("FrontLeft");
+        FrontRight  = hardwareMap.dcMotor.get("FrontRight");
+        BackLeft    = hardwareMap.dcMotor.get("BackLeft");
+        BackRight   = hardwareMap.dcMotor.get("BackRight");
+        BackRight.setDirection(DcMotor.Direction.REVERSE);
+        FrontRight.setDirection(DcMotor.Direction.REVERSE);
 
         //Collection Devices
-        HookLift = hardwareMap.dcMotor.get("HookLift");
-        ChainLift = hardwareMap.dcMotor.get("ChainLift");
-        trayDispL = hardwareMap.servo.get("TrayDispL");
-        trayDispR = hardwareMap.servo.get("TrayDispR");
+        HookLift    = hardwareMap.dcMotor.get("HookLift");
+        ChainLift   = hardwareMap.dcMotor.get("ChainLift");
+        trayDispL   = hardwareMap.servo.get("TrayDispL");
+        trayDispR   = hardwareMap.servo.get("TrayDispR");
         trayDispL.setDirection(Servo.Direction.REVERSE);
-        // TODO inverse either of the servos if anything goes wrong in testing
 
         //Lowest Intake Servos
         IntakeL = hardwareMap.servo.get("IntakeL");
         IntakeR = hardwareMap.servo.get("IntakeR");
-        //TODO : inverse either of the servos in case if anything goes wrong in testing
 
+        //Occurs when nothing is Pressed
         FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -69,17 +71,17 @@ public class TeleOp6899 extends LinearOpMode {
 
 
         //Powers Set for Wheel Motors
-<<<<<<< HEAD
+
         FrontLeft.setPower(Power2);
         BackLeft.setPower(Power2);
-        BackRight.setPower(-Power1);
-        FrontRight.setPower(-Power1);
-=======
+        BackRight.setPower(Power1);
+        FrontRight.setPower(Power1);
+
             FrontLeft.setPower(Power1);
             BackLeft.setPower(Power1);
-            BackRight.setPower(-Power2);
-            FrontRight.setPower(-Power2);
->>>>>>> 0b429da29fbda05c771f3687752aa65140e7fd83
+            BackRight.setPower(Power2);
+            FrontRight.setPower(Power2);
+
 
     }
 
@@ -94,23 +96,23 @@ public class TeleOp6899 extends LinearOpMode {
 
             IntakeL.setPosition(1);
             IntakeR.setPosition(-1);
-        } else {
+        }
+        else {
             IntakeL.setPosition(0.5);
             IntakeR.setPosition(0.5);
         }
     }
 
     private void trayControlSys() {
-        // Control and Power for chain lift
         if (gamepad2.dpad_up) {
             ChainLift.setPower(1);
-        } else if (gamepad2.dpad_down) {
+        }
+        else if (gamepad2.dpad_down) {
             ChainLift.setPower(-1);
-        } else {
+        }
+        else {
             ChainLift.setPower(0);
         }
-
-        //Control and Power for Tray Dispenser servos
 
 
         if (gamepad2.b) {
@@ -118,24 +120,24 @@ public class TeleOp6899 extends LinearOpMode {
             trayDispR.setPosition(1.0);
         }
         else if (gamepad2.a) {
-
             trayDispL.setPosition(-1.0);
             trayDispR.setPosition(-1.0);
-        } else {
+        }
+        else {
             trayDispL.setPosition(0.5);
             trayDispR.setPosition(0.5);
         }
     }
 
     private void HookSys() {
-        //Control for Hook Lift
-
         if (gamepad2.y) {
             HookLift.setPower(1);
-        } else if (gamepad2.x) {
+        }
+        else if (gamepad2.x) {
 
             HookLift.setPower(-1);
-        } else {
+        }
+        else {
             HookLift.setPower(0);
         }
     }
