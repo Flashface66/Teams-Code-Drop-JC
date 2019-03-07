@@ -129,7 +129,7 @@ public class Autonomous3981 extends LinearOpMode {
             Strafe(2,-0.7,2200);
 
             //Left
-            RunToPosDrive(2,-0.5,2100);
+            RunToPosDrive(2,-0.5,2400);
 
             //Rotate Left
             Rotate(1,- 0.6,1100);
@@ -157,7 +157,7 @@ public class Autonomous3981 extends LinearOpMode {
             Strafe(2,-0.7,2200);
 
             //Left
-            RunToPosDrive(2,-0.5,2100);
+            RunToPosDrive(2,-0.5,2400);
 
             //Rotate Left
             Rotate(1,-0.6,1100);
@@ -180,7 +180,7 @@ public class Autonomous3981 extends LinearOpMode {
             Strafe(2,-0.7,2200);
 
             //Left
-            RunToPosDrive(2,-0.5,2100);
+            RunToPosDrive(2,-0.5,2400);
 
             //Rotate Left
             Rotate(1,-0.6,1100);
