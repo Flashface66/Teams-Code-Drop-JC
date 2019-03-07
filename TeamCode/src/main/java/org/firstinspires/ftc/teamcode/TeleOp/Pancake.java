@@ -135,7 +135,7 @@ public class Pancake extends LinearOpMode {
             Extend.setPower(gamepad2.left_stick_y);
         }else
             if (gamepad2.right_stick_y !=0){
-                Extend.setPower(-gamepad2.left_stick_y );
+                Extend.setPower(-gamepad2.right_stick_y );
             }else{
                 Extend.setPower(0.0);
             }
