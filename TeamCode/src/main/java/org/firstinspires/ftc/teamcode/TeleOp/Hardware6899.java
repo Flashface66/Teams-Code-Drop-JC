@@ -9,28 +9,28 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Add the necessary hardware required here following the format given
  * Do not edit unless you are sure of what you're doing - Chavaughn
  */
-class Hardware6899 {
+public class Hardware6899 {
 
     // TODO add the different components of the robots
-    DcMotor   FrontLeft      = null;
-    DcMotor   FrontRight     = null;
-    DcMotor   BackLeft       = null;
-    DcMotor   BackRight      = null;
-    DcMotor   ChainLift      = null;
-    DcMotor   HookLift       = null;
+    public DcMotor   FrontLeft      = null;
+    public DcMotor   FrontRight     = null;
+    public DcMotor   BackLeft       = null;
+    public DcMotor   BackRight      = null;
+    public DcMotor   ChainLift      = null;
+    public DcMotor   HookLift       = null;
 
-    Servo     trayDispL      = null;
-    Servo     trayDispR      = null;
-    Servo     IntakeL        = null;
-    Servo     IntakeR        = null;
+    public Servo     trayDispL      = null;
+    public Servo     trayDispR      = null;
+    public Servo     IntakeL        = null;
+    public Servo     IntakeR        = null;
 
     private HardwareMap      hwmap          = null;
 
-    Hardware6899(){
+    public Hardware6899(){
 
     }
 
-    void init(HardwareMap thehwmap){
+    public void init(HardwareMap thehwmap){
         hwmap = thehwmap;
 
         //TODO Initialize them as given below with the drive-train
