@@ -32,10 +32,6 @@ public class Autonomous6899 extends LinearOpMode {
 
     private Hardware6899 Bot = new Hardware6899();
 
-    private enum CompetitionLegs{
-        Delatch,Vuforia, Mineral, Marker, Crater, Finish}
-    CompetitionLegs Legs;
-
     private GoldAlignDetector detector;
 
     private ElapsedTime runtime = new ElapsedTime();
