@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.TeleOp.Hardware6899;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,6 @@ public class Autonomous6899 extends LinearOpMode {
     // Select which camera you want use.  The FRONT camera is the one on the same side as the screen.
     // Valid choices are:  BACK or FRONT
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
-
-    private OpenGLMatrix lastLocation = null;
-
-    private VuforiaLocalizer vuforia;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -194,10 +191,10 @@ public class Autonomous6899 extends LinearOpMode {
             parameters.vuforiaLicenseKey = VUFORIA_KEY ;
             parameters.cameraDirection   = CAMERA_CHOICE;
 
-            vuforia = ClassFactory.getInstance().createVuforia(parameters);
+            VuforiaLocalizer vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
             //TODO Use the data here to get the different locations on the field.
-            VuforiaTrackables targetsRoverRuckus = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
+            VuforiaTrackables targetsRoverRuckus = vuforia.loadTrackablesFromAsset("RoverRuckus");
             VuforiaTrackable blueRover = targetsRoverRuckus.get(0);
             blueRover.setName("Blue-Rover");
             VuforiaTrackable redFootprint = targetsRoverRuckus.get(1);
@@ -270,7 +267,7 @@ public class Autonomous6899 extends LinearOpMode {
                         // the last time that call was made, or if the trackable is not currently visible.
                         OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
                         if (robotLocationTransform != null) {
-                            lastLocation = robotLocationTransform;
+                            OpenGLMatrix lastLocation = robotLocationTransform;
                         }
                         break;
                     }
