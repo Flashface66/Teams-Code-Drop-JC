@@ -6,6 +6,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Autonomous 3981")
@@ -44,7 +45,7 @@ public class Autonomous3981 extends LinearOpMode {
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         FrontRight.setDirection(DcMotor.Direction.FORWARD);//Reverse
-        FrontLeft.setDirection(DcMotor.Direction.REVERSE);//Forward
+        FrontLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
         BackLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
         BackRight.setDirection(DcMotor.Direction.REVERSE);//Reverse
 
