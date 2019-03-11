@@ -1,17 +1,16 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "TeleOp")
-
-
+@Disabled
 public class TeleOp6899 extends LinearOpMode {
 
     private     DcMotor     FrontLeft;
@@ -80,8 +79,8 @@ public class TeleOp6899 extends LinearOpMode {
         double Power1;
         double Power2;
 
-        Power1 = Range.clip(gamepad1.left_stick_y, -.4, .4);
-        Power2 = Range.clip(gamepad1.right_stick_y, -.4, .4);
+        Power1 = Range.clip(gamepad1.left_stick_y, -1, 1);
+        Power2 = Range.clip(gamepad1.right_stick_y, -1, 1);
 
 
         //Powers Set for Wheel Motors
@@ -121,8 +120,8 @@ public class TeleOp6899 extends LinearOpMode {
         if (gamepad2.dpad_up) {
 
             telemetry.addLine("Folding Gear");
-            ChainLift.setPower(0.4);
-            ChainLift2.setPower(-0.4);
+            ChainLift.setPower(.5);
+            ChainLift2.setPower(-.5);
 
         }
         else if (gamepad2.dpad_down) {

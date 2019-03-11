@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous(name = "Autonomous 3981")
+@Disabled
 public class Autonomous3981 extends LinearOpMode {
 
 

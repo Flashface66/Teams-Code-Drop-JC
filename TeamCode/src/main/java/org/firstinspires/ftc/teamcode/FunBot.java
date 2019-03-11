@@ -1,157 +1,168 @@
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.Mecanum;
-
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
-public class Pancake extends LinearOpMode {
-    private DcMotor FrontLeft  = null;
-    private DcMotor FrontRight = null;
-    private DcMotor BackRight  = null;
-    private DcMotor BackLeft   = null;
-    private DcMotor Lift       = null;
-    private DcMotor Arm        = null;
-    private DcMotor Extend     = null;
-    private Servo   Intake     = null;
-    private Servo   Lid        = null;
+public class FunBot extends LinearOpMode {
 
+    DcMotor Fleft,Fright,
+            BackL,BackR,
+            Lift;
+    double MpH, Speed;;
+    boolean Reverseinput;
+//    public enum VehicleGears
+//    {Neutral,One,Two,Three,four,reverse}
+//    VehicleGears Gears;
+    private ElapsedTime runtime = new ElapsedTime();
 
-    private final boolean shouldMecanumDrive = true;
+    public enum VehicleGears
+    {Neutral,One,Two,Three,four,reverse{};
+        public VehicleGears next(){
+            return values()[ordinal()+1];
+        }
+        public VehicleGears previous(){
+            return values()[ordinal()-1];
+        }
+    }
+    VehicleGears Gears;
 
-    @Override
-    public void runOpMode() {
-        telemetry.addData("Robot: Pancake", " Initialized");
-
+    public VehicleGears getGears() {
         /*
-          Mapping each hardware device to the phone configuration file
-         */
-        FrontLeft  = hardwareMap.get(DcMotor.class,"Fleft");
-        FrontRight = hardwareMap.get(DcMotor.class,"Fright");
-        BackRight  = hardwareMap.get(DcMotor.class,"BackRight");
-        BackLeft   = hardwareMap.get(DcMotor.class,"BackLeft");
-        Arm        = hardwareMap.get(DcMotor.class,"Arm");
-        Lift       = hardwareMap.get(DcMotor.class,"Lift");
-        Extend     = hardwareMap.get(DcMotor.class,"Extend");
-        Intake     = hardwareMap.get(Servo.class,  "Intake");
-        Lid        = hardwareMap.get(Servo.class,  "Lid");
-         /*+
-        Setting the stops for the Robot.
-            This makes the motor's activity, once their value is zero, to act as a brake.
-        */
-        FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Extend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-         /*
-         Setting the Direction of each motor where needed
-*/
-        FrontRight.setDirection(DcMotor.Direction.FORWARD);//Reverse
-        FrontLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
-        BackLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
-        BackRight.setDirection(DcMotor.Direction.REVERSE);//Reverse
+            Controls
+            Gear Up - Right Bumper
+            Gear Down - Left Bumper
+            Accelerate - Right Trigger
+            Brake - Left Trigger
+            Reverse Gear - 1 value on Joystick + Gear down
+             */
+        if (gamepad1.right_bumper) {
+            UpGears();
+        }
+        if (gamepad1.left_bumper) {
+            DownGears();
+        }
+        if (gamepad1.left_bumper && gamepad1.right_stick_y == 1)
+        {
+            Reverseinput = true;
+            DownGears();
+        }
+        return Gears;
+    }
+    public void UpGears() {
+        if (Gears == VehicleGears.reverse && runtime.seconds() > .5){
+            Gears = VehicleGears.Neutral;
+        }else if (Gears == VehicleGears.Neutral&& runtime.seconds() > .5){
+            Gears = VehicleGears.One;
+        }else if (Gears == VehicleGears.One&& runtime.seconds() > .5){
+            Gears = VehicleGears.Two;
+        }else if (Gears == VehicleGears.Two&& runtime.seconds() > .5){
+            Gears = VehicleGears.Three;
+        }else if (Gears == VehicleGears.Three&& runtime.seconds() > .5){
+            Gears = VehicleGears.four;
+        }
+        runtime.reset();
+    }
+    public void DownGears(){
+        if (Gears == VehicleGears.four&& runtime.seconds() > .5){
+            Gears = VehicleGears.Three;
+        }else if (Gears == VehicleGears.Three&& runtime.seconds() > .5){
+            Gears = VehicleGears.Two;
+        }else if (Gears == VehicleGears.Two&& runtime.seconds() > .5){
+            Gears = VehicleGears.One;
+        }else if (Gears == VehicleGears.One&& runtime.seconds() > .5){
+            Gears = VehicleGears.Neutral;
+        }else if (Gears == VehicleGears.Neutral&& runtime.seconds() > .5){
+            Gears = VehicleGears.reverse;
+        }
+        runtime.reset();
+    }
 
-         /*
-         Initializing the Encoders.
-            Resetting them and setting their run mode.
-         */
-        FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Extend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    public double SpeedLegs(){
+        if (Gears == VehicleGears.One){
+            Speed = Range.clip(Speed+0.001,0,0.2);
+        }if (Gears == VehicleGears.Two){
+            Speed = Range.clip(Speed+0.001,0,0.4);
+        }if (Gears == VehicleGears.Three){
+            Speed = Range.clip(Speed+0.001,0,0.6);
+        }if (Gears == VehicleGears.four){
+            Speed = Range.clip(Speed+0.001,0,1);
+        }if (Gears == VehicleGears.Neutral){
+            Speed = Range.clip(Speed+0.001,0,0);
+        }if (Gears == VehicleGears.reverse){
+            Speed = Range.clip(Speed-0.001,-1,0);
+        }
+        return Speed;
+    }
+    @Override
+    public void runOpMode() throws InterruptedException {
 
+        //Hardware Mapping
+        Fleft = hardwareMap.dcMotor.get("fleft");
+        Fright = hardwareMap.dcMotor.get("fright");
+        BackL = hardwareMap.dcMotor.get("backl");
+        BackR = hardwareMap.dcMotor.get("backr");
+
+        Fright.setDirection(DcMotorSimple.Direction.REVERSE);
+        BackR.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        telemetry.addLine("Controls");
+        telemetry.addLine("Gear Up      - Right Bumper");
+        telemetry.addLine("Gear Down    - Left Bumper");
+        telemetry.addLine("Accelerate   - Right Trigger");
+        telemetry.addLine("Brake        - Left Trigger");
+        telemetry.addLine("Reverse Gear - 1 value on Joystick + Gear down");
         telemetry.update();
-
         waitForStart();
+        Gears = VehicleGears.One;
+        /*
+        Controls
+        Gear Up - Right Bumper
+        Gear Down - Left Bumper
+        Accelerate - Right Trigger
+        Brake - Left Trigger
+        Reverse Gear - 1 value on Joystick + Gear down
+         */
         while (opModeIsActive()){
-            Intake();
-            Movements();
+            SpeedLegs();
+            if (gamepad1.right_trigger == 1){
+                MpH = SpeedLegs();
+            }
+            else if (gamepad1.left_trigger == 1){
+                MpH = Range.clip(MpH - 0.001, 0,1);
+            }else
+            {MpH = 0;}
+            getGears();
+            Fright.setPower(MpH);
+            Fleft.setPower(MpH);
+            BackL.setPower(MpH);
+            BackR.setPower(MpH);
+            if (gamepad1.right_stick_y == 1 ){
+                Fright.setPower(-MpH);
+                Fleft.setPower(MpH);
+                BackL.setPower(MpH);
+                BackR.setPower(-MpH);
+            }
+            if (gamepad1.right_stick_y == -1){
+                Fright.setPower(MpH);
+                Fleft.setPower(-MpH);
+                BackL.setPower(-MpH);
+                BackR.setPower(MpH);
+            }
+            telemetry.addLine("Controls");
+            telemetry.addLine("Gear Up      - Right Bumper");
+            telemetry.addLine("Gear Down    - Left Bumper");
+            telemetry.addLine("Accelerate   - Right Trigger");
+            telemetry.addLine("Brake        - Left Trigger");
+            telemetry.addLine("Reverse Gear - 1 value on Joystick + Gear down");
+            telemetry.addLine("Gear");
+            telemetry.addData("Current",Gears);
             telemetry.update();
         }
-
-    }
-
-
-    private void Movements(){
-        if (shouldMecanumDrive) {
-            // Convert joysticks to desired motion.
-            Mecanum.Motion motion = Mecanum.joystickToMotion(
-                    gamepad1.left_stick_x, gamepad1.left_stick_y,
-                    gamepad1.right_stick_x, gamepad1.right_stick_y);
-
-            // Convert desired motion to wheel powers, with power clamping.
-            Mecanum.Wheels wheels = Mecanum.motionToWheels(motion);
-            FrontLeft.setPower(wheels.frontLeft);
-            FrontRight.setPower(wheels.frontRight);
-            BackLeft.setPower(wheels.backLeft);
-            BackRight.setPower(wheels.backRight);
-        }
-
-    }
-
-
-    private void Intake(){
-        //Condition for the arm for the servo arm's motor.
-        if (gamepad2.left_trigger >0.1){
-            Lid.setPosition(0.5);
-            if (gamepad2.left_trigger>0.6) {
-                Arm.setPower(gamepad2.left_trigger);
-            }
-
-        }else
-        if (gamepad2.right_trigger > 0.1){
-            Lid.setPosition(0.5);
-            if (gamepad2.right_trigger>0.6){
-                Arm.setPower(-gamepad2.right_trigger);
-            }
-        }else{
-            Lid.setPosition(1);
-            Arm.setPower(0.0);
-        }
-        /// Determining the power of the Lift if the left trigger passes .6
-        if (gamepad1.left_trigger >0.6){
-            Lift.setPower(gamepad1.left_trigger);
-        }else
-            // Having it go in the other direction.
-            if (gamepad1.right_trigger > 0.6){
-                Lift.setPower(-gamepad1.right_trigger);
-            }else{
-                Lift.setPower(0.0);
-            }
-
-        if (gamepad2.left_stick_y !=0){
-            Extend.setPower(gamepad2.left_stick_y);
-        }else{
-            Extend.setPower(0.0);
-        }
-
-        if (gamepad2.dpad_left){
-            Intake.setPosition(0);
-        }
-        if (gamepad2.dpad_right){
-            Intake.setPosition(0.5);
-        }
-
-
-
-
     }
 
 }
