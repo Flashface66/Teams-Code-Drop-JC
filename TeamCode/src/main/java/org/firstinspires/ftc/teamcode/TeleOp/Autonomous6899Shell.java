@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Autonomous.Hardware6899;
+import org.firstinspires.ftc.teamcode.TeleOp.Hardware6899;
 
 
 public class Autonomous6899Shell extends LinearOpMode {

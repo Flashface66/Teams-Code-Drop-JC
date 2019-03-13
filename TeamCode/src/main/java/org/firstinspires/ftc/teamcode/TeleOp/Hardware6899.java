@@ -34,16 +34,16 @@ public class Hardware6899 {
         hwmap = thehwmap;
 
         //TODO Initialize new hardware as given below with the drive-train
-        FrontLeft = hwmap.get(DcMotor.class,"FrontLeft");
-        FrontRight = hwmap.get(DcMotor.class,"FrontRight");
-        BackLeft = hwmap.get(DcMotor.class,"BackLeft");
-        BackRight = hwmap.get(DcMotor.class,"BackRight");
+        FrontLeft   = hwmap.get(DcMotor.class,"FrontLeft");
+        FrontRight  = hwmap.get(DcMotor.class,"FrontRight");
+        BackLeft    = hwmap.get(DcMotor.class,"BackLeft");
+        BackRight   = hwmap.get(DcMotor.class,"BackRight");
 
         FrontRight.setDirection(DcMotor.Direction.REVERSE);
         BackRight.setDirection(DcMotor.Direction.REVERSE);
 
         //Collection Devices
-        HookLift = hwmap.get(DcMotor.class,"HookLift");
+        HookLift  = hwmap.get(DcMotor.class,"HookLift");
         ChainLift = hwmap.get(DcMotor.class,"ChainLift");
         trayDispL = hwmap.get(Servo.class,"TrayDispL");
         trayDispR = hwmap.get(Servo.class,"TrayDispR");
