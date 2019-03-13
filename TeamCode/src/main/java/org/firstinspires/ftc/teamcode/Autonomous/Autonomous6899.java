@@ -29,7 +29,6 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 @Disabled
 @Autonomous(name = "Autonomous 6899")
-@Disabled
 public class Autonomous6899 extends LinearOpMode {
 
     private Hardware6899 Bot = new Hardware6899();
