@@ -2,30 +2,20 @@ package org.firstinspires.ftc.teamcode.WORLDS;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "Worlds Robot", group = "JC")
 
 public class Worlds_Teleop extends LinearOpMode {
-    private DcMotor FrontLeft  = null;
-    private DcMotor FrontRight = null;
-    private DcMotor BackRight  = null;
-    private DcMotor BackLeft   = null;
 
-    private final boolean shouldMecanumDrive = true;
+    private HardwareWorlds Hardware = new HardwareWorlds();
+
+    private boolean shouldMecanumDrive = true;
 
     @Override
     public void runOpMode(){
-        FrontLeft  = hardwareMap.get(DcMotor.class,"Fleft");
-        FrontRight = hardwareMap.get(DcMotor.class,"Fright");
-        BackRight  = hardwareMap.get(DcMotor.class,"BRight");
-        BackLeft   = hardwareMap.get(DcMotor.class,"BLeft");
 
-
-        FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+         // Using the Hardware class HardwareWorlds to initialize the hardware of the robot
+        Hardware.init(hardwareMap);
 
         waitForStart();
         while (opModeIsActive()){
@@ -34,7 +24,16 @@ public class Worlds_Teleop extends LinearOpMode {
     }
 
 
-    public void Movement(){
+    private void Movement(){
+        /*Button used to switch between mecanum driving program and a normal driving program
+            without all the actual function of mecanum
+        */
+        if (gamepad1.right_bumper){
+            shouldMecanumDrive = false;
+        }
+        if (!gamepad1.right_bumper){
+            shouldMecanumDrive = true;
+        }
         if (shouldMecanumDrive) {
             // Convert joysticks to desired motion.
             Mecanum.Motion motion = Mecanum.joystickToMotion(
@@ -43,11 +42,31 @@ public class Worlds_Teleop extends LinearOpMode {
 
             // Convert desired motion to wheel powers, with power clamping.
             Mecanum.Wheels wheels = Mecanum.motionToWheels(motion);
-            FrontLeft.setPower(wheels.frontLeft);
-            FrontRight.setPower(wheels.frontRight);
-            BackLeft.setPower(wheels.backLeft);
-            BackRight.setPower(wheels.backRight);
+            Hardware.FrontLeft.setPower(wheels.frontLeft);
+            Hardware.FrontRight.setPower(wheels.frontRight);
+            Hardware.BackLeft.setPower(wheels.backLeft);
+            Hardware.BackRight.setPower(wheels.backRight);
         }
+        //If the right bumper is pressed
+        if (!shouldMecanumDrive){
+            if (gamepad1.right_stick_x == 0) {
+                Hardware.FrontLeft.setPower(gamepad1.left_stick_y);
+                Hardware.FrontRight.setPower(gamepad1.left_stick_y);
+                Hardware.BackLeft.setPower(gamepad1.left_stick_y);
+                Hardware.BackRight.setPower(gamepad1.left_stick_y);
+            }else if (gamepad1.left_stick_x > 0.3 || gamepad1.left_stick_x < -0.3){
+                Hardware.FrontLeft.setPower(-gamepad1.left_stick_y);
+                Hardware.FrontRight.setPower(gamepad1.left_stick_y);
+                Hardware.BackLeft.setPower(gamepad1.left_stick_y);
+                Hardware.BackRight.setPower(-gamepad1.left_stick_y);
+            }else {
+                Hardware.FrontLeft.setPower(gamepad1.left_stick_y);
+                Hardware.FrontRight.setPower(-gamepad1.left_stick_y);
+                Hardware.BackLeft.setPower(gamepad1.left_stick_y);
+                Hardware.BackRight.setPower(-gamepad1.left_stick_y);
+            }
+        }
+
 
     }
 }
