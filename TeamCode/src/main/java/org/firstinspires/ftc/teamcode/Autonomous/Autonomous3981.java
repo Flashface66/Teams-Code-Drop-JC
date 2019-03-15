@@ -4,11 +4,15 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+
 @Autonomous(name = "Autonomous 3981")
+@Disabled
 public class Autonomous3981 extends LinearOpMode {
 
 
@@ -18,6 +22,7 @@ public class Autonomous3981 extends LinearOpMode {
     private DcMotor BackRight  = null;
     private DcMotor BackLeft   = null;
     private DcMotor Lift       = null;
+    private Servo   Intake     = null;
     private ElapsedTime runtime = new ElapsedTime();
 
     private GoldAlignDetector detector;
@@ -35,7 +40,8 @@ public class Autonomous3981 extends LinearOpMode {
         FrontRight = hardwareMap.get(DcMotor.class,"Fright");
         BackRight  = hardwareMap.get(DcMotor.class,"BackRight");
         BackLeft   = hardwareMap.get(DcMotor.class,"BackLeft");
-        Lift       = hardwareMap.get(DcMotor.class, "Lift");
+        Lift       = hardwareMap.get(DcMotor.class,"Lift");
+        Intake     = hardwareMap.get(Servo.class,  "Intake");
 
         FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -44,7 +50,7 @@ public class Autonomous3981 extends LinearOpMode {
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         FrontRight.setDirection(DcMotor.Direction.FORWARD);//Reverse
-        FrontLeft.setDirection(DcMotor.Direction.REVERSE);//Forward
+        FrontLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
         BackLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
         BackRight.setDirection(DcMotor.Direction.REVERSE);//Reverse
 
@@ -66,8 +72,8 @@ public class Autonomous3981 extends LinearOpMode {
 
 
         // Optional Tuning
-        detector.alignSize = 200; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.alignSize = 250; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = -6; // How far from center frame to offset this alignment zone.
         detector.downscale = 0.4; // How much to downscale the input frames
 
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
@@ -84,114 +90,41 @@ public class Autonomous3981 extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        
+
+        Intake.setPosition(0.5);
 
         waitForStart();
 
 
-        telemetry.addData("IsAligned" , detector.getAligned()); // Is the bot aligned with the gold mineral
-        telemetry.update();
+    telemetry.addData("IsAligned", detector.getAligned()); // Is the bot aligned with the gold mineral
+    telemetry.update();
 
-        goldPos = detector.getXPosition();
+    goldPos = detector.getXPosition();
 
 
-        //dismount();
-        //sleep(500);
+    dismount();
+    sleep(500);
 
-        delay(1000);
+    delay(1000);
 
-        //Left
-        RunwithEncAll();
-        RunToPosDrive(1,-0.5,300);
+    //Left
+    RunwithEncAll();
+    RunToPosDrive(1, -0.5, 360);
 
-        //Forward
-        Strafe(1,0.5,300);
+    //Forward
+    Strafe(1, 0.5, 360);
 
-        //Right
-        RunToPosDrive(1,0.5,300);
+    //Right
+    RunToPosDrive(1, 0.5, 300);
 
-        delay(1400);
+    //Forward
+    Strafe(1, 0.5, 5000);
 
-        if(goldPos < 170) {
-            telemetry.addLine("Going to Left side");
-            telemetry.update();
-            //Forward
-            Strafe(1,0.5,300);
 
-            //Left
-            RunToPosDrive(1,0.5,400);
 
-            //Forward
-            Strafe(4,0.7,4000);
-
-            //Reverse
-            Strafe(2,-0.7,3000);
-
-            //Left
-            RunToPosDrive(2,-0.5,2600);
-
-            //Rotate Left
-            Rotate(1,0.6,1100);
-
-            //Right
-            RunToPosDrive(1,0.5,3800);
-
-            //Left
-            RunToPosDrive(5,-0.5,8000);
-
-        }else if (goldPos > 500) {
-            telemetry.addLine("Going to Right Side");
-            telemetry.update();
-
-            //Forward
-            Strafe(1,0.5,300);
-
-            //Right
-            RunToPosDrive(1,-0.5,400);
-
-            //Forward
-            Strafe(4,0.7,4000);
-
-            //Reverse
-            Strafe(2,-0.7,3000);
-
-            //Left
-            RunToPosDrive(2,-0.5,2600);
-
-            //Rotate Left
-            Rotate(1,0.6,1100);
-
-            //Right
-            RunToPosDrive(1,0.5,3800);
-
-            //Left
-            RunToPosDrive(5,-0.5,8000);
-
-        }else{
-            telemetry.addLine("Going Straight");
-            telemetry.update();
-
-            Strafe(4,0.7,4000);
-
-            //Reverse
-            Strafe(2,-0.7,3000);
-
-            //Left
-            RunToPosDrive(2,-0.5,2600);
-
-            //Rotate Left
-            Rotate(1,0.6,1100);
-
-            //Right
-            RunToPosDrive(1,0.5,3800);
-
-            //Left
-            RunToPosDrive(5,-0.5,8000);
-
-        }
     }
 
-    public void dismount(){
+    private void dismount(){
         telemetry.addData("status" , "dismount");
         telemetry.update();
 
@@ -230,7 +163,7 @@ public class Autonomous3981 extends LinearOpMode {
         ZeroDrive();
         RunwithEncAll();
 
-        
+
     }
 
     private void Strafe(int inches,double power, int sleeptimer){

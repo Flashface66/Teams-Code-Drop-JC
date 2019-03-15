@@ -1,14 +1,16 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Mecanum;
+import org.firstinspires.ftc.teamcode.WORLDS.Mecanum;
 
 
 @TeleOp
+@Disabled
 public class Pancake extends LinearOpMode {
     private DcMotor FrontLeft  = null;
     private DcMotor FrontRight = null;
@@ -37,9 +39,9 @@ public class Pancake extends LinearOpMode {
         Arm        = hardwareMap.get(DcMotor.class,"Arm");
         Lift       = hardwareMap.get(DcMotor.class,"Lift");
         Extend     = hardwareMap.get(DcMotor.class,"Extend");
-        Intake     = hardwareMap.get(Servo.class, "Intake");
-        Lid        = hardwareMap.get(Servo.class, "Lid");
-         /*
+        Intake     = hardwareMap.get(Servo.class,  "Intake");
+        Lid        = hardwareMap.get(Servo.class,  "Lid");
+         /*+
         Setting the stops for the Robot.
             This makes the motor's activity, once their value is zero, to act as a brake.
         */
@@ -54,7 +56,7 @@ public class Pancake extends LinearOpMode {
          Setting the Direction of each motor where needed
 */
         FrontRight.setDirection(DcMotor.Direction.FORWARD);//Reverse
-        FrontLeft.setDirection(DcMotor.Direction.REVERSE);//Forward
+        FrontLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
         BackLeft.setDirection(DcMotor.Direction.FORWARD);//Forward
         BackRight.setDirection(DcMotor.Direction.REVERSE);//Reverse
 
@@ -109,12 +111,20 @@ public class Pancake extends LinearOpMode {
 
     private void Intake(){
         //Condition for the arm for the servo arm's motor.
-        if (gamepad2.left_trigger >0.9){
-            Arm.setPower(gamepad2.left_trigger);
+        if (gamepad2.left_trigger >0.1){
+            Lid.setPosition(0.5);
+            if (gamepad2.left_trigger>0.6) {
+                Arm.setPower(gamepad2.left_trigger);
+            }
+
         }else
-            if (gamepad2.right_trigger > 0.9){
+            if (gamepad2.right_trigger > 0.1){
+                Lid.setPosition(0.5);
+                if (gamepad2.right_trigger>0.6){
                 Arm.setPower(-gamepad2.right_trigger);
+                }
             }else{
+                Lid.setPosition(1);
                 Arm.setPower(0.0);
             }
         /// Determining the power of the Lift if the left trigger passes .6
@@ -130,32 +140,18 @@ public class Pancake extends LinearOpMode {
 
         if (gamepad2.left_stick_y !=0){
             Extend.setPower(gamepad2.left_stick_y);
-        }else
-            if (gamepad1.right_stick_y !=0){
-                Extend.setPower(-gamepad2.left_stick_y );
-            }else{
+           }else{
                 Extend.setPower(0.0);
-            }
+           }
 
         if (gamepad2.dpad_left){
-            Intake.setPosition(0.7);
+            Intake.setPosition(0);
         }
         if (gamepad2.dpad_right){
-            Intake.setPosition(0.3);
-        }
-        if (gamepad2.dpad_down){
             Intake.setPosition(0.5);
         }
 
 
-        if (gamepad2.a){
-            Lid.setPosition(0.9);
-        }
-
-
-        if (gamepad2.b){
-            Lid.setPosition(0.5);
-        }
 
 
     }
