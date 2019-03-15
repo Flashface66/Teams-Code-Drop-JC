@@ -1,24 +1,23 @@
-package org.firstinspires.ftc.teamcode.Other;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.WORLDS.Mecanum;
-
-@TeleOp(name="MarcNew")
+@TeleOp
 @Disabled
-public class MarcNew extends LinearOpMode {
+public class ProdigyTesting extends LinearOpMode {
     private DcMotor FrontLeft, FrontRight,
             BackRight, BackLeft, Lift,
-            Joint;
-    private Servo Phone, ClawL,ClawR,Latch;
-    private double FRP,FLP,BRP,BLP;
-    private double x,CL,CR = 0;
+            Joint,Joint2;
+    private Servo IntakeR,IntakeL;
+    private double power;
+    private double x,y,CL = 0,CR = 0;
     private final boolean shouldMecanumDrive = true;
 
     @Override
@@ -33,11 +32,10 @@ public class MarcNew extends LinearOpMode {
         BackRight = hardwareMap.dcMotor.get("BackRight");
         BackLeft = hardwareMap.dcMotor.get("BackLeft");
         Joint = hardwareMap.dcMotor.get("Joint");
+        Joint2 = hardwareMap.dcMotor.get("Joint2");
         Lift = hardwareMap.dcMotor.get("Lift");
-        Phone = hardwareMap.servo.get("Camera");
-        ClawR = hardwareMap.servo.get("ClawR");
-        ClawL = hardwareMap.servo.get("ClawL");
-        Latch = hardwareMap.servo.get("Latch");
+        IntakeL = hardwareMap.servo.get("IntakeL");
+        IntakeR = hardwareMap.servo.get("IntakeR");
          /*
         Setting the stops for the Robot.
             This makes the motor's activity, once their value is zero, to act as a brake.
@@ -47,14 +45,15 @@ public class MarcNew extends LinearOpMode {
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Joint.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Joint2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
          /*
          Setting the Direction of each motor where needed
          */
-        FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        FrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        BackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        FrontRight.setDirection(DcMotorSimple.Direction.FORWARD);//Reverse
+        FrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);//Forward
+        BackLeft.setDirection(DcMotorSimple.Direction.REVERSE);//Forward
+        BackRight.setDirection(DcMotorSimple.Direction.FORWARD);//Reverse
          /*
          Initializing the Encoders.
             Resetting them and setting their run mode.
@@ -65,19 +64,18 @@ public class MarcNew extends LinearOpMode {
         BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Joint.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Joint2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Joint.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Joint2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         telemetry.update();
 
         waitForStart();
-        Phone.setPosition(x);
-        ClawL.setPosition(CL);
-        ClawR.setPosition(CR);
         while (opModeIsActive()){
 
             Servos();
@@ -87,58 +85,31 @@ public class MarcNew extends LinearOpMode {
 
     }
 
-    private void Servos(){
+    private void Servos() {
         /*
         Servo movements for the robot
+         */
+        if (gamepad2.a){
+            IntakeR.setPosition(.5);
+            IntakeL.setPosition(.5);
+        }
+        if (gamepad2.b){
+            IntakeR.setPosition(-1);
+            IntakeL.setPosition(1);
+        }if (gamepad2.y){
+            IntakeR.setPosition(1);
+            IntakeL.setPosition(-1);
+        }
+        if (gamepad2.x){
+            IntakeR.setPosition(0.5);
+            IntakeL.setPosition(0.5);
+        }
+        if (gamepad2.left_trigger > 0.3){
+            power = Range.clip(power + 0.001,-20,20);
+            IntakeR.setPosition(power);
+            IntakeL.setPosition(power);
+        }
 
-        Using the dpad to incrementally map the position of the Phone's servo with each press of the
-        dpad.
-         */
-        if (gamepad1.dpad_up){
-            Phone.setPosition(x);
-            x = Range.clip(x+0.005,0.001,1);
-            telemetry.addData("Position",Phone.getPosition());
-        }
-        if (gamepad1.dpad_down){
-            Phone.setPosition(x);
-            x = Range.clip(x-0.005,0.001,1);
-            telemetry.addData("Position",Phone.getPosition());
-        }
-        /*
-        Similar to the movement of the phone's servo as it incrementally increases and decreases the
-        position of the servo on the Claw Arm.
-         */
-        if (gamepad1.a) {
-            ClawL.setPosition(CL);
-            CL = Range.clip(CL+0.005,0.18,.6);
-//            ClawR.setPosition(CR);
-//            CR = Range.clip(CR-0.005,0.59,.9);
-//            telemetry.addData("Position Claw R",ClawR.getPosition());
-            /*
-            Telemetry to get the position of the claw for troubleshooting.
-             */
-            telemetry.addData("Position Claw L", ClawL.getPosition());
-        }
-        if (gamepad1.b){
-            ClawL.setPosition(CL);
-            CL = Range.clip(CL-0.005,.18,.6);
-//            ClawR.setPosition(CR);
-//            CR = Range.clip(CR+0.005,0.59,.9);
-//            telemetry.addData("Position Claw R",ClawR.getPosition());
-            /*
-            Telemetry to get the position of the claw for troubleshooting.
-             */
-            telemetry.addData("Position Claw L", ClawL.getPosition());
-        }
-        /*
-        The Latch is the servo that keeps the robot connected to the launcher.
-         */
-        if (gamepad1.y){
-            Latch.setPosition(0);
-        }
-        if (gamepad1.x){
-            Latch.setPosition(1);
-        }
     }
 
     private void Movements(){
@@ -165,15 +136,18 @@ public class MarcNew extends LinearOpMode {
             }else{
                 Lift.setPower(0.0);
             }
-        //Condition for the arm for the servo arm's motor.
-        if (gamepad1.right_bumper){
-            Joint.setPower(0.3);
-        }else
-        if (gamepad1.left_bumper){
-            Joint.setPower(-0.3);
-        }else
-        {
+        if (gamepad2.left_stick_y != 0){
+            Joint.setPower(gamepad2.left_stick_y);
+        }
+        else {
             Joint.setPower(0.0);
         }
+         if (gamepad2.right_stick_y != 0){
+            Joint2.setPower(gamepad2.right_stick_y);
+        }
+        else
+         {
+             Joint2.setPower(0.0);
+         }
     }
 }
