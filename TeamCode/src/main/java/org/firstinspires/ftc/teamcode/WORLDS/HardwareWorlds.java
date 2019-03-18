@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Add the necessary hardware required here following the format given
  * Do not edit unless you are sure of what you're doing - Chavaughn
  */
-public class HardwareWorlds {
+public class  HardwareWorlds {
 
     // TODO add the different components of the robots
     public DcMotor   FrontLeft      = null;
