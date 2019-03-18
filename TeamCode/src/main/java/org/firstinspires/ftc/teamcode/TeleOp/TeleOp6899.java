@@ -10,8 +10,12 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "TeleOp")
+<<<<<<< HEAD
 
 
+=======
+@Disabled
+>>>>>>> parent of 34c602b... :shrug:
 public class TeleOp6899 extends LinearOpMode {
 
     private     DcMotor     FrontLeft;
