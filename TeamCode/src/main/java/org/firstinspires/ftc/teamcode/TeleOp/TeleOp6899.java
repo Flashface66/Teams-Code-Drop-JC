@@ -11,6 +11,9 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "TeleOp")
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 3a400e5... Merge branch 'Testing' of https://github.com/Chavaughn/Teams-Code-Drop-JC into Testing
 
 
 =======
