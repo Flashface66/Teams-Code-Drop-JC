@@ -36,7 +36,7 @@ public class Worlds_Teleop extends LinearOpMode {
     }
 
 
-    public void Movement(){
+    private void Movement(){
         if (shouldMecanumDrive) {
             // Convert joysticks to desired motion.
             Mecanum.Motion motion = Mecanum.joystickToMotion(
