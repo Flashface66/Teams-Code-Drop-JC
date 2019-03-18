@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Other;
+package org.firstinspires.ftc.teamcode;
 
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

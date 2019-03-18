@@ -1,16 +1,16 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "TeleOp")
-@Disabled
+
 
 public class TeleOp6899 extends LinearOpMode {
 
@@ -18,9 +18,9 @@ public class TeleOp6899 extends LinearOpMode {
     private     DcMotor     BackLeft;
     private     DcMotor     FrontRight;
     private     DcMotor     BackRight;
-    private     DcMotor     ChainLift;
+    private     DcMotor     ChainLift1;
     private     DcMotor     ChainLift2;
-    private     DcMotor     HookLift;
+    private     DcMotor     BoxExt;
     private     Servo       trayDispL;
     private     Servo       trayDispR;
     private     Servo       IntakeR;
@@ -34,17 +34,17 @@ public class TeleOp6899 extends LinearOpMode {
         FrontRight  = hardwareMap.dcMotor.get("FrontRight");
         BackLeft    = hardwareMap.dcMotor.get("BackLeft");
         BackRight   = hardwareMap.dcMotor.get("BackRight");
-        BackRight.setDirection (DcMotor.Direction.FORWARD);
-        FrontRight.setDirection(DcMotor.Direction.FORWARD);
+        BackRight.setDirection (DcMotor.Direction.REVERSE);
+        FrontRight.setDirection(DcMotor.Direction.REVERSE);
 
         //Collection Devices
-        HookLift    = hardwareMap.dcMotor.get("HookLift");
-        ChainLift   = hardwareMap.dcMotor.get("ChainLift");
-        ChainLift2   = hardwareMap.dcMotor.get("ChainLift2");
+        BoxExt      = hardwareMap.dcMotor.get("BoxExt");
+        ChainLift1  = hardwareMap.dcMotor.get("ChainLift");
+        ChainLift2  = hardwareMap.dcMotor.get("ChainLift");
         trayDispL   = hardwareMap.servo.get  ("TrayDispL");
         trayDispR   = hardwareMap.servo.get  ("TrayDispR");
         trayDispL.setDirection(Servo.Direction.REVERSE);
-        ChainLift2.setDirection(DcMotor.Direction.REVERSE);
+        ChainLift1.setDirection(DcMotor.Direction.REVERSE);
 
         //Lowest Intake Servos
         IntakeL     = hardwareMap.servo.get  ("IntakeL");
@@ -55,8 +55,6 @@ public class TeleOp6899 extends LinearOpMode {
         FrontRight.setZeroPowerBehavior (DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior   (DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior  (DcMotor.ZeroPowerBehavior.BRAKE);
-        ChainLift.setZeroPowerBehavior  (DcMotor.ZeroPowerBehavior.BRAKE);
-        ChainLift2.setZeroPowerBehavior  (DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
@@ -80,15 +78,15 @@ public class TeleOp6899 extends LinearOpMode {
         double Power1;
         double Power2;
 
-        Power1 = Range.clip(gamepad1.left_stick_y, -1, 1);
-        Power2 = Range.clip(gamepad1.right_stick_y, -1, 1);
+        Power1 = Range.clip(gamepad1.left_stick_y, -.7, .7);
+        Power2 = Range.clip(gamepad1.right_stick_y, -.7, .7);
 
 
         //Powers Set for Wheel Motors
         FrontLeft.setPower (Power1);
         BackLeft.setPower  (Power1);
-        BackRight.setPower (-Power2);
-        FrontRight.setPower(-Power2);
+        BackRight.setPower (Power2);
+        FrontRight.setPower(Power2);
 
 
     }
@@ -97,14 +95,14 @@ public class TeleOp6899 extends LinearOpMode {
 
         if (gamepad2.right_trigger > 0.2) {
 
-            telemetry.addLine("Intake");
+            telemetry.addLine("Box Intake");
             IntakeL.setPosition(-1);
             IntakeR.setPosition(1);
 
         }
-        else if (gamepad2.left_trigger > .2) {
+        else if (gamepad2.left_trigger > 0.2) {
 
-            telemetry.addLine("Intake");
+            telemetry.addLine("Box Outtake");
             IntakeL.setPosition(1);
             IntakeR.setPosition(-1);
 
@@ -120,21 +118,20 @@ public class TeleOp6899 extends LinearOpMode {
     private void trayControlSys() {
         if (gamepad2.dpad_up) {
 
-            telemetry.addLine("Folding Gear");
-            ChainLift.setPower(.5);
-            ChainLift2.setPower(-.5);
-
+            telemetry.addLine("Arm Lift");
+            ChainLift1.setPower(1);
+            ChainLift2.setPower(1);
         }
         else if (gamepad2.dpad_down) {
 
-                telemetry.addLine("Folding Gear");
-            ChainLift.setPower(-0.4);
-            ChainLift2.setPower(0.4);
+            telemetry.addLine("Arm Lift");
+            ChainLift1.setPower(-1);
+            ChainLift2.setPower(-1);
 
         }
         else {
 
-            ChainLift.setPower(0);
+            ChainLift1.setPower(0);
             ChainLift2.setPower(0);
 
         }
@@ -145,7 +142,6 @@ public class TeleOp6899 extends LinearOpMode {
             telemetry.addLine("Tray Dropper");
             trayDispL.setPosition(1.0);
             trayDispR.setPosition(1.0);
-
         }
         else if (gamepad2.a) {
 
@@ -165,20 +161,16 @@ public class TeleOp6899 extends LinearOpMode {
     private void HookSys() {
         if (gamepad2.y) {
 
-            telemetry.addLine("Retract");
-            HookLift.setPower(.7);
-
+            telemetry.addLine("Box Extender");
+            BoxExt.setPower(1);
         }
         else if (gamepad2.x) {
-
-            telemetry.addLine("eExtend");
-            HookLift.setPower(-.7);
+            telemetry.addLine("Box Extender");
+            BoxExt.setPower(-1);
 
         }
         else {
-
-            HookLift.setPower(0);
-
+            BoxExt.setPower(0);
         }
     }
 }
