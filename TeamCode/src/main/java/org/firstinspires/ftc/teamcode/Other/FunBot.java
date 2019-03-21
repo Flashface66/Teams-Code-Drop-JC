@@ -100,7 +100,7 @@ public class FunBot extends LinearOpMode {
         }
 
         if (gamepad1.b){
-            Overdrive=Overdrive -0.1;
+            Overdrive=Overdrive-0.1;
         }
 
         if (gamepad1.right_stick_x >0){
