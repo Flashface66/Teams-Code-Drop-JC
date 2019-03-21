@@ -13,6 +13,8 @@ public class Worlds_Teleop extends LinearOpMode {
     private DcMotor BackRight  = null;
     private DcMotor BackLeft   = null;
     private DcMotor Lift       = null;
+    private DcMotor Deposit    = null;
+    private DcMotor Extend     = null;
     private Servo   Spin1      = null;
     private Servo   Spin2      = null;
     private Servo   BoxLift1   = null;
@@ -30,10 +32,13 @@ public class Worlds_Teleop extends LinearOpMode {
         BackRight  = hardwareMap.get(DcMotor.class, "BRight");
         BackLeft   = hardwareMap.get(DcMotor.class, "BLeft");
         Lift       = hardwareMap.get(DcMotor.class, "Lift");
+        Deposit    = hardwareMap.get(DcMotor.class, "Deposit");
+        Extend     = hardwareMap.get(DcMotor.class, "Extend");
         BoxLift1   = hardwareMap.get(Servo.class, "BoxLift1");
         BoxLift2   = hardwareMap.get(Servo.class, "BoxLift2");
         Spin1      = hardwareMap.get(Servo.class, "Spin1");
         Spin2      = hardwareMap.get(Servo.class, "Spin2");
+
 
 
         FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -41,6 +46,7 @@ public class Worlds_Teleop extends LinearOpMode {
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Deposit.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         waitForStart();
@@ -50,6 +56,8 @@ public class Worlds_Teleop extends LinearOpMode {
             LiftControl();
 
             Intake();
+
+            Arms();
         }
     }
 
@@ -105,5 +113,23 @@ public class Worlds_Teleop extends LinearOpMode {
             Intake1.setPosition(0.5);
             Intake2.setPosition(0.5);
         }
+    }
+
+    private void Arms(){
+        //Lifts to the Lander
+        if (gamepad2.right_bumper)
+            Deposit.setPower(1);
+        else if (gamepad2.left_bumper)
+            Deposit.setPower(-1);
+        else
+            Deposit.setPower(0.0);
+
+        //Extend into the Crater
+        if (gamepad2.right_stick_y > 0.2)
+            Extend.setPower(1);
+        else if (gamepad2.right_stick_y < -0.2)
+            Extend.setPower(-1);
+        else
+            Extend.setPower(0);
     }
 }
