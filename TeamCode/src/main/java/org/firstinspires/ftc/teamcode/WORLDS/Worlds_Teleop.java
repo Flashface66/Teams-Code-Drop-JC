@@ -13,6 +13,10 @@ public class Worlds_Teleop extends LinearOpMode {
     private DcMotor FrontRight = null;
     private DcMotor BackRight  = null;
     private DcMotor BackLeft   = null;
+    private DcMotor HookLift   = null;
+    private DcMotor Diposite   = null;
+    private DcMotor EnterCrater= null;
+
 
     private final boolean shouldMecanumDrive = true;
 
@@ -22,12 +26,20 @@ public class Worlds_Teleop extends LinearOpMode {
         FrontRight = hardwareMap.get(DcMotor.class,"Fright");
         BackRight  = hardwareMap.get(DcMotor.class,"BRight");
         BackLeft   = hardwareMap.get(DcMotor.class,"BLeft");
+        HookLift   = hardwareMap.get(DcMotor.class, "HLift");
+        Diposite   = hardwareMap.get(DcMotor.class, "Diposite");
+        EnterCrater= hardwareMap.get (DcMotor.class, "ECrater")
+
+
 
 
         FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        HookLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Diposite.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        EnterCrater.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
         while (opModeIsActive()){
