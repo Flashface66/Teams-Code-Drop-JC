@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Mecanum;
 
@@ -17,7 +18,8 @@ public class Worlds_Teleop extends LinearOpMode {
     private DcMotor HookLift   = null;
     private DcMotor Diposite   = null;
     private DcMotor EnterCrater= null;
-    private Servo   
+    private Servo   BoxLift1;
+    private Servo   BoxLift2;
 
 
     private final boolean shouldMecanumDrive = true;
@@ -30,7 +32,10 @@ public class Worlds_Teleop extends LinearOpMode {
         BackLeft   = hardwareMap.get(DcMotor.class,"BLeft");
         HookLift   = hardwareMap.get(DcMotor.class, "HLift");
         Diposite   = hardwareMap.get(DcMotor.class, "Diposite");
-        EnterCrater= hardwareMap.get (DcMotor.class, "ECrater")
+        EnterCrater= hardwareMap.get(DcMotor.class, "ECrater");
+
+        BoxLift1   = hardwareMap.get(Servo.class, "BoxLift1");
+        BoxLift2   = hardwareMap.get(Servo.class, "BoxLift2");
 
 
 
@@ -42,6 +47,8 @@ public class Worlds_Teleop extends LinearOpMode {
         HookLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Diposite.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         EnterCrater.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        BoxLift1.
 
         waitForStart();
         while (opModeIsActive()){
@@ -89,6 +96,6 @@ public class Worlds_Teleop extends LinearOpMode {
     }
 
     private void EnterCraterControl(){
-        if (gamepad2.)
+
     }
 }
