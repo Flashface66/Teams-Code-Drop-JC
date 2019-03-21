@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.WORLDS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Mecanum;
 
@@ -16,6 +17,7 @@ public class Worlds_Teleop extends LinearOpMode {
     private DcMotor HookLift   = null;
     private DcMotor Diposite   = null;
     private DcMotor EnterCrater= null;
+    private Servo   
 
 
     private final boolean shouldMecanumDrive = true;
@@ -44,6 +46,9 @@ public class Worlds_Teleop extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()){
             Movement();
+            LiftControl();
+            DipositeControl();
+            EnterCraterControl();
         }
     }
 
@@ -63,5 +68,27 @@ public class Worlds_Teleop extends LinearOpMode {
             BackRight.setPower(wheels.backRight);
         }
 
+    }
+
+    private void LiftControl(){
+        if(gamepad2.dpad_up)
+            HookLift.setPower(1);
+        else if (gamepad2.dpad_down)
+            HookLift.setPower(-1);
+        else
+            HookLift.setPower(0);
+    }
+
+    private void DipositeControl(){
+        if(gamepad2.b)
+            Diposite.setPower(1);
+        else if (gamepad2.a)
+            Diposite.setPower(-1);
+        else
+            Diposite.setPower(0);
+    }
+
+    private void EnterCraterControl(){
+        if (gamepad2.)
     }
 }
