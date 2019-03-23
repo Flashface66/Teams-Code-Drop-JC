@@ -27,28 +27,28 @@ public class  HardwareWorlds {
     public Servo   Intake1    = null;
     public Servo   Intake2    = null;
     
-    public HardwareMap hw     = null;
+    public HardwareMap hwmap;
     
     HardwareWorlds(){
 
     }
 
-    public void init(HardwareMap hw){
-
+    public void init(HardwareMap thehwmap){
+        hwmap = thehwmap;
         //TODO Initialize new hardware as given below with the drive-train.
-        FrontLeft  = hw.get(DcMotor.class, "Fleft");
-        FrontRight = hw.get(DcMotor.class, "Fright");
-        BackRight  = hw.get(DcMotor.class, "BRight");
-        BackLeft   = hw.get(DcMotor.class, "BLeft");
-        Lift       = hw.get(DcMotor.class, "Lift");
-        Deposit    = hw.get(DcMotor.class, "Deposit");
-        Extend     = hw.get(DcMotor.class, "Extend");
-        BoxLift1   = hw.get(Servo.class,   "BoxLift1");
-        BoxLift2   = hw.get(Servo.class,   "BoxLift2");
-        Spin1      = hw.get(Servo.class,   "Spin1");
-        Spin2      = hw.get(Servo.class,   "Spin2");
-        Intake1    = hw.get(Servo.class,   "Intake1");
-        Intake2    = hw.get(Servo.class,   "Intake2");
+        FrontLeft  = hwmap.get(DcMotor.class, "Fleft");
+        FrontRight = hwmap.get(DcMotor.class, "Fright");
+        BackRight  = hwmap.get(DcMotor.class, "BRight");
+        BackLeft   = hwmap.get(DcMotor.class, "BLeft");
+        Lift       = hwmap.get(DcMotor.class, "Lift");
+        Deposit    = hwmap.get(DcMotor.class, "Deposit");
+        Extend     = hwmap.get(DcMotor.class, "Extend");
+        BoxLift1   = hwmap.get(Servo.class,   "BoxLift1");
+        BoxLift2   = hwmap.get(Servo.class,   "BoxLift2");
+        Spin1      = hwmap.get(Servo.class,   "Spin1");
+        Spin2      = hwmap.get(Servo.class,   "Spin2");
+        Intake1    = hwmap.get(Servo.class,   "Intake1");
+        Intake2    = hwmap.get(Servo.class,   "Intake2");
 
 
         //TODO Make sure directions are correct.
@@ -72,13 +72,6 @@ public class  HardwareWorlds {
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Deposit.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //Setting the initial power of the Motors to 0.
-        FrontLeft.setPower(0);
-        FrontRight.setPower(0);
-        BackLeft.setPower(0);
-        BackLeft.setPower(0);
-
-
-
+        Extend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 }
