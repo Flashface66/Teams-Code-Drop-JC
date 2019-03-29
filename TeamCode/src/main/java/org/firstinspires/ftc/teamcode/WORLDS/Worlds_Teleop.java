@@ -9,9 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Worlds_Teleop extends LinearOpMode {
 
 
-
-    private final boolean shouldMecanumDrive = true;
-
     private HardwareWorlds RB  = new HardwareWorlds();
 
 
@@ -34,19 +31,17 @@ public class Worlds_Teleop extends LinearOpMode {
 
 
     private void Movement() {
-        if (shouldMecanumDrive) {
-            // Convert joysticks to desired motion.
-            Mecanum.Motion motion = Mecanum.joystickToMotion(
-                    gamepad1.left_stick_x, gamepad1.left_stick_y,
-                    gamepad1.right_stick_x, gamepad1.right_stick_y);
+        // Convert joysticks to desired motion.
+        Mecanum.Motion motion = Mecanum.joystickToMotion(
+                gamepad1.left_stick_x, gamepad1.left_stick_y,
+                gamepad1.right_stick_x, gamepad1.right_stick_y);
 
-            // Convert desired motion to wheel powers, with power clamping.
-            Mecanum.Wheels wheels = Mecanum.motionToWheels(motion);
-            RB.FrontLeft.setPower(wheels.frontLeft);
-            RB.FrontRight.setPower(wheels.frontRight);
-            RB.BackLeft.setPower(wheels.backLeft);
-            RB.BackRight.setPower(wheels.backRight);
-        }
+        // Convert desired motion to wheel powers, with power clamping.
+        Mecanum.Wheels wheels = Mecanum.motionToWheels(motion);
+        RB.FrontLeft.setPower(wheels.frontLeft);
+        RB.FrontRight.setPower(wheels.frontRight);
+        RB.BackLeft.setPower(wheels.backLeft);
+        RB.BackRight.setPower(wheels.backRight);
 
     }
 
