@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Other;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,7 +10,7 @@ import java.util.jar.Attributes;
 
 
 @TeleOp(name = "MemeBot")
-
+@Disabled
 public class FunBot extends LinearOpMode {
     private DcMotor FrontLeft  = null;
     private DcMotor FrontRight = null;
