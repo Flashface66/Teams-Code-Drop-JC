@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.WORLDS;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -28,7 +29,10 @@ public class  HardwareWorlds {
     public Servo   Intake2    = null;
     
     public HardwareMap hwmap;
-    
+
+    DigitalChannel digitalTouch1;  // Hardware Device Object
+    DigitalChannel digitalTouch2;
+
     HardwareWorlds(){
 
     }
@@ -36,17 +40,19 @@ public class  HardwareWorlds {
     public void init(HardwareMap thehwmap){
         hwmap = thehwmap;
         //Initializes the motors and servos for the robpot.
-        FrontLeft  = hwmap.get(DcMotor.class, "Fleft");
-        FrontRight = hwmap.get(DcMotor.class, "Fright");
-        BackRight  = hwmap.get(DcMotor.class, "BRight");
-        BackLeft   = hwmap.get(DcMotor.class, "BLeft");
-        Lift       = hwmap.get(DcMotor.class, "Lift");
-        Deposit    = hwmap.get(DcMotor.class, "Deposit");
-        Extend     = hwmap.get(DcMotor.class, "Extend");
-        Spin1      = hwmap.get(Servo.class,   "Spin1");
-        Spin2      = hwmap.get(Servo.class,   "Spin2");
-        Intake1    = hwmap.get(Servo.class,   "Intake1");
-        Intake2    = hwmap.get(Servo.class,   "Intake2");
+        FrontLeft    = hwmap.get(DcMotor.class, "Fleft");
+        FrontRight   = hwmap.get(DcMotor.class, "Fright");
+        BackRight    = hwmap.get(DcMotor.class, "BRight");
+        BackLeft     = hwmap.get(DcMotor.class, "BLeft");
+        Lift         = hwmap.get(DcMotor.class, "Lift");
+        Deposit      = hwmap.get(DcMotor.class, "Deposit");
+        Extend       = hwmap.get(DcMotor.class, "Extend");
+        Spin1        = hwmap.get(Servo.class,   "Spin1");
+        Spin2        = hwmap.get(Servo.class,   "Spin2");
+        Intake1      = hwmap.get(Servo.class,   "Intake1");
+        Intake2      = hwmap.get(Servo.class,   "Intake2");
+        digitalTouch1 = hwmap.get(DigitalChannel.class, "sensor_digital");
+        digitalTouch2 = hwmap.get(DigitalChannel.class, "sensor_digital");
 
 
         //Sets the right direction for the Motors in the drivetrain.

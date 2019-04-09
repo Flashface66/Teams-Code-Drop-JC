@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.WORLDS;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 
 @TeleOp(name = "Worlds Robot", group = "JC")
@@ -14,10 +15,18 @@ public class Worlds_Teleop extends LinearOpMode {
 
     private HardwareWorlds RB  = new HardwareWorlds();
 
+    DigitalChannel digitalTouch1;  // Hardware Device Object
+    DigitalChannel digitalTouch2;  // Hardware Device Object
+
+
 
     @Override
     public void runOpMode() {
         RB.init(hardwareMap);
+
+        digitalTouch1.setMode(DigitalChannel.Mode.INPUT);
+        digitalTouch2.setMode(DigitalChannel.Mode.INPUT);
+
         waitForStart();
         while (opModeIsActive()) {
             Movement_System();
@@ -87,9 +96,9 @@ public class Worlds_Teleop extends LinearOpMode {
             RB.Deposit.setPower(0.0);}
 
         //Extend into the Crater
-        if (gamepad2.right_stick_y > 0.2){
+        if (gamepad2.right_stick_y > 0.2 && digitalTouch1.getState() == true){
             RB.Extend.setPower(1);}
-        else if (gamepad2.right_stick_y < -0.2){
+        else if (gamepad2.right_stick_y < -0.2 && digitalTouch2.getState() == true){
             RB.Extend.setPower(-1);}
         else{
             RB.Extend.setPower(0.0);}
