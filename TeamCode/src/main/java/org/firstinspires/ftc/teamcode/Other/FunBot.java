@@ -10,7 +10,7 @@ import java.util.jar.Attributes;
 
 
 @TeleOp(name = "MemeBot")
-//@Disabled
+@Disabled
 public class FunBot extends LinearOpMode {
     private DcMotor FrontLeft  = null;
     private DcMotor FrontRight = null;
