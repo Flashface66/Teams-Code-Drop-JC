@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.WORLDS;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -30,8 +29,6 @@ public class  HardwareWorlds {
     
     public HardwareMap hwmap;
 
-    DigitalChannel digitalTouch1;  // Hardware Device Object
-    DigitalChannel digitalTouch2;
 
     HardwareWorlds(){
 
@@ -51,8 +48,7 @@ public class  HardwareWorlds {
         Spin2        = hwmap.get(Servo.class,   "Spin2");
         Intake1      = hwmap.get(Servo.class,   "Intake1");
         Intake2      = hwmap.get(Servo.class,   "Intake2");
-        digitalTouch1 = hwmap.get(DigitalChannel.class, "sensor_digital");
-        digitalTouch2 = hwmap.get(DigitalChannel.class, "sensor_digital");
+
 
 
         //Sets the right direction for the Motors in the drivetrain.
