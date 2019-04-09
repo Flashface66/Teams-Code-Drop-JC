@@ -12,12 +12,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Worlds_Autonomous extends LinearOpMode {
 
     private static final double     CPMR    = 1440 ;    // TETRIX Motor Encoder
-    private static final double     DGR   = 2.0 ;     // < 1.0 if geared UP
+    private static final double     DGR   = 1.0 ;     // < 1.0 if geared UP
     private static final double     WDI   = 4.0 ;     // For figuring circumference
     private static final double     CPI         = (CPMR * DGR) / (WDI * 3.1415);
 
     private ElapsedTime runtime = new ElapsedTime();
-    private ElapsedTime GlobalRuntime = new ElapsedTime();
 
     private HardwareWorlds RB = new HardwareWorlds();
 
@@ -66,43 +65,135 @@ public class Worlds_Autonomous extends LinearOpMode {
         //Strafe towards the balls
         Strafe(-8.375,10);
 
-        //Move back enough to offset the position of the phone to eliminate further error.
-        FBMove(-1,10);
+//        //Move back enough to offset the position of the phone to eliminate further error.
+//        FBMove(-1,10);
 
         if (detector.getAligned()){
             Pos =2;
+            detector.disable();
+            telemetry.addData("Position", Pos);
+            telemetry.update();
+
+//            //Adjust back the Robot to remove the offset
+//            FBMove(1,2);
+
+            //Rotate to face the Cube
+            Rotate(-10,4);
+
+            //Move forward Knock off cube
+            FBMove(5,2);
+
+            //Move back out of way of other minerals
+            FBMove(-3.8,2);
+
+            //Rotate with back facing the wall--to red crater
+            Rotate(10,4);
+
+            //Strafe forward enough to avoid collisions with other robots
+            Strafe(-1.5,8);
+
+            //Move back to the wall
+            FBMove(-18,4);
+
+            //Rotate facing the depot
+            Rotate(-7.7,4);
+
+            //Move forward to the depot to deposit
+            /*
+            Deposit Below FBMove
+             */
+            FBMove(22,6);
+
+            // Move back to original Position
+            FBMove(-22,6);
+
+            //Rotate to face Crater
+            Rotate(22,5);
+
+
         }else {
             //Rotate if the ball is not found in the center or Position 2.
             Rotate(4, 10);
             if (detector.getAligned() && Pos == 0) {
                 Pos = 3;
+                detector.disable();
+                telemetry.addData("Position", Pos);
+                telemetry.update();
+                Rotate(-4, 10);
+
+                Strafe(-3,4);
+
+                FBMove(8,7);
+
+                Strafe(-8,4);
+
+                Strafe(5.5,4);
+
+                FBMove(-8,4);
+
+                //Move back to the wall
+                FBMove(-17.8,4);
+
+                //Rotate facing the depot
+                Rotate(-6.9,4);
+
+                //Move forward to the depot to deposit
+            /*
+            Deposit Below FBMove
+             */
+                FBMove(22,6);
+
+                // Move back to original Position
+                FBMove(-22,6);
+
+                //Rotate to face Crater
+                Rotate(22,5);
+
+
             }else {
-                //Original Rotation
+                //Rotate to face the 1st mineral if other two aren't gold
                 Rotate(-9.9, 11);
                 if (detector.getAligned() && Pos == 0) {
                     Pos = 1;
+                    detector.disable();
+                    telemetry.addData("Position", Pos);
+                    telemetry.update();
+
+                    Rotate(5.9,4);
+
+                    Strafe(-3,4);
+
+                    FBMove(-8,7);
+
+                    Strafe(-8,4);
+
+                    Strafe(5.5,4);
+
+                    //Move back to the wall
+                    FBMove(-8.8,4);
+
+                    //Rotate facing the depot
+                    Rotate(-6.9,4);
+
+                    //Move forward to the depot to deposit
+            /*
+            Deposit Below FBMove
+             */
+                    FBMove(22,6);
+
+                    // Move back to original Position
+                    FBMove(-22,6);
+
+                    //Rotate to face Crater
+                    Rotate(22,5);
                 }
             }
         }
 
-        if (Pos == 0){
-            telemetry.addLine("The cube has not been found man :(");
-            GlobalRuntime.reset();
-            while (opModeIsActive() && !detector.getAligned() && GlobalRuntime.seconds() < 6){
-                Rotate(3,20);
-                if (GlobalRuntime.seconds() >=0.7 && GlobalRuntime.seconds() <= 1.4){
-                    Pos = 3;
-                }if (GlobalRuntime.seconds() >=2.8 && GlobalRuntime.seconds() <= 3.5){
-                    Pos = 1;
-                }else {
-                    Pos = 2;
-                }
-            }
-        }
         detector.disable();
         telemetry.addData("Position", Pos);
         telemetry.update();
-        sleep(7000);
+
 
     }
 
@@ -116,7 +207,7 @@ public class Worlds_Autonomous extends LinearOpMode {
 
             targetfl = RB.FrontLeft.getCurrentPosition() + (int)(inches * CPI);
             targetfr = RB.FrontRight.getCurrentPosition() + (int)(inches * CPI);
-            targetbr = (RB.BackRight.getCurrentPosition() + (int)(inches * CPI))-3;
+            targetbr = (RB.BackRight.getCurrentPosition() + (int)(inches * CPI))-100;
             targetbl = RB.BackLeft.getCurrentPosition() + (int)(inches * CPI);
             RB.FrontLeft.setTargetPosition(targetfl);
             RB.FrontRight.setTargetPosition(targetfr);
