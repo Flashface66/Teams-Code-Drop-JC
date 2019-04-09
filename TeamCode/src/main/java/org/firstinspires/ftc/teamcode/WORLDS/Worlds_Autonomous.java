@@ -12,22 +12,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Worlds_Autonomous extends LinearOpMode {
 
     private static final double     CPMR    = 1440 ;    // TETRIX Motor Encoder
-    private static final double     DGR   = 1.0 ;     // < 1.0 if geared UP
-    private static final double     WDI   = 4.0 ;     // For figuring circumference
+    private static final double     DGR   = 3.0 ;     // < 1.0 if geared UP
+    private static final double     WDI   = 3.5 ;     // For figuring circumference
     private static final double     CPI         = (CPMR * DGR) / (WDI * 3.1415);
 
     private ElapsedTime runtime = new ElapsedTime();
 
     private HardwareWorlds RB = new HardwareWorlds();
 
-    private GoldAlignDetector detector;
     private int Pos = 0;
 
 
     @Override
     public void runOpMode() {
 
-        detector = new GoldAlignDetector(); // Create detector
+        GoldAlignDetector detector = new GoldAlignDetector();
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
         detector.useDefaults(); // Set detector to use default settings
         //tuning
