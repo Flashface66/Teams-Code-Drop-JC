@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.WORLDS;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "Worlds Robot", group = "JC")
@@ -35,6 +36,12 @@ public class Worlds_Teleop extends LinearOpMode {
 
 
     private void  Movement_System() {
+
+        double flp;
+        double frp;
+        double blp;
+        double brp;
+
         if (shouldMecanumDrive) {
             // Convert joysticks to desired motion.
             Mecanum.Motion motion = Mecanum.joystickToMotion(
@@ -43,10 +50,14 @@ public class Worlds_Teleop extends LinearOpMode {
 
             // Convert desired motion to wheel powers, with power clamping.
             Mecanum.Wheels wheels = Mecanum.motionToWheels(motion);
-            RB.FrontLeft.setPower(wheels.frontLeft);
-            RB.FrontRight.setPower(wheels.frontRight);
-            RB.BackLeft.setPower(wheels.backLeft);
-            RB.BackRight.setPower(wheels.backRight);
+            flp = Range.clip(wheels.frontLeft,-0.9,0.9);
+            frp = Range.clip(wheels.frontRight,-0.9,0.9);
+            blp = Range.clip(wheels.backLeft,-0.9,0.9);
+            brp = Range.clip(wheels.backRight,-0.9,0.9);
+            RB.FrontLeft.setPower(flp);
+            RB.FrontRight.setPower(frp);
+            RB.BackLeft.setPower(blp);
+            RB.BackRight.setPower(brp);
         }
 
     }
