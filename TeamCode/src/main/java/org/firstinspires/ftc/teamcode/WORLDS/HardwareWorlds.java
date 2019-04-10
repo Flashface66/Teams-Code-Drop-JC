@@ -22,8 +22,6 @@ public class  HardwareWorlds {
     public DcMotor Extend     = null;
     public Servo   Spin1      = null;
     public Servo   Spin2      = null;
-    public Servo   BoxLift1   = null;
-    public Servo   BoxLift2   = null;
     public Servo   Intake1    = null;
     public Servo   Intake2    = null;
     
