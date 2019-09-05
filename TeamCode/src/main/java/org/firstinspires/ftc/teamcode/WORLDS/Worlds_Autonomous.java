@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Worlds_Autonomous extends LinearOpMode {
 
     private static final double     CPMR    = 1440 ;    // TETRIX Motor Encoder
-    private static final double     DGR   = 3.0 ;     // < 1.0 if geared UP
+    private static final double     DGR   = 0.5 ;     // < 1.0 if geared UP
     private static final double     WDI   = 3.5 ;     // For figuring circumference
     private static final double     CPI         = (CPMR * DGR) / (WDI * 3.1415);
 
@@ -52,6 +52,9 @@ public class Worlds_Autonomous extends LinearOpMode {
         waitForStart();
         /*
 
+        OUTDATEDDDDDDD!!!!
+        Update to match the gear ratios
+
         Food for the thought.
         Forward movement is positive Inches for             ----------- FBMove
         Strafe right movement is positive Inches for        ----------- Strafe
@@ -64,17 +67,11 @@ public class Worlds_Autonomous extends LinearOpMode {
         //Strafe towards the balls
         Strafe(-8.375,10);
 
-//        //Move back enough to offset the position of the phone to eliminate further error.
-//        FBMove(-1,10);
-
         if (detector.getAligned()){
             Pos =2;
             detector.disable();
             telemetry.addData("Position", Pos);
             telemetry.update();
-
-//            //Adjust back the Robot to remove the offset
-//            FBMove(1,2);
 
             //Rotate to face the Cube
             Rotate(-10,4);
@@ -206,7 +203,7 @@ public class Worlds_Autonomous extends LinearOpMode {
 
             targetfl = RB.FrontLeft.getCurrentPosition() + (int)(inches * CPI);
             targetfr = RB.FrontRight.getCurrentPosition() + (int)(inches * CPI);
-            targetbr = (RB.BackRight.getCurrentPosition() + (int)(inches * CPI))-100;
+            targetbr = (RB.BackRight.getCurrentPosition() + (int)(inches * CPI));
             targetbl = RB.BackLeft.getCurrentPosition() + (int)(inches * CPI);
             RB.FrontLeft.setTargetPosition(targetfl);
             RB.FrontRight.setTargetPosition(targetfr);
@@ -229,7 +226,6 @@ public class Worlds_Autonomous extends LinearOpMode {
             }
             Stop();
             EncStart();
-            sleep(200);
         }
 
     }
@@ -244,7 +240,7 @@ public class Worlds_Autonomous extends LinearOpMode {
 
             targetfl = RB.FrontLeft.getCurrentPosition() + (int)(inches * CPI);
             targetfr = RB.FrontRight.getCurrentPosition() + (int)(-inches * CPI);
-            targetbr = (RB.BackRight.getCurrentPosition() + (int)(inches * CPI))-3;
+            targetbr = (RB.BackRight.getCurrentPosition() + (int)(inches * CPI));
             targetbl = RB.BackLeft.getCurrentPosition() + (int)(-inches * CPI);
             RB.FrontLeft.setTargetPosition(targetfl);
             RB.FrontRight.setTargetPosition(targetfr);
@@ -267,7 +263,6 @@ public class Worlds_Autonomous extends LinearOpMode {
             }
             Stop();
             EncStart();
-            sleep(200);
         }
 
     }
@@ -282,7 +277,7 @@ public class Worlds_Autonomous extends LinearOpMode {
 
             targetfl = RB.FrontLeft.getCurrentPosition() + (int)(inches * CPI);
             targetfr = RB.FrontRight.getCurrentPosition() + (int)(-inches * CPI);
-            targetbr = (RB.BackRight.getCurrentPosition() + (int)(-inches * CPI))-3;
+            targetbr = (RB.BackRight.getCurrentPosition() + (int)(-inches * CPI));
             targetbl = RB.BackLeft.getCurrentPosition() + (int)(inches * CPI);
             RB.FrontLeft.setTargetPosition(targetfl);
             RB.FrontRight.setTargetPosition(targetfr);
@@ -305,8 +300,11 @@ public class Worlds_Autonomous extends LinearOpMode {
             }
             Stop();
             EncStart();
-            sleep(200);
         }
+    }
+
+    private void Delatch(){
+        RB.Lift.setPower(1);
     }
 
     private void EncStart(){
