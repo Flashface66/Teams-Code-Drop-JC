@@ -26,7 +26,6 @@ public class Worlds_Teleop extends LinearOpMode {
 
             LiftControl_System();
 
-
             MineralCollection_System();
 
             Arms();
@@ -35,6 +34,8 @@ public class Worlds_Teleop extends LinearOpMode {
 
 
     private void  Movement_System() {
+
+
         if (shouldMecanumDrive) {
             // Convert joysticks to desired motion.
             Mecanum.Motion motion = Mecanum.joystickToMotion(
@@ -89,12 +90,13 @@ public class Worlds_Teleop extends LinearOpMode {
             RB.Deposit.setPower(0.0);}
 
         //Extend into the Crater
-        if (gamepad2.right_stick_y > 0.2 ){
+        if (gamepad2.right_stick_y > 0.2){
             RB.Extend.setPower(1);}
-        else if (gamepad2.right_stick_y < -0.2 ){
+        else if (gamepad2.right_stick_y < -0.2){
             RB.Extend.setPower(-1);}
         else{
             RB.Extend.setPower(0.0);}
+
 
         //Lifts Rotational Collection System
         if (gamepad2.dpad_up) {
